@@ -2,9 +2,10 @@
 //#include <GLUT/glut.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
+#include <stdio.h>
 //g++ FlorDeAbril.c -o FlorDeAbril -lGL -lGLU -lglut
 
-static int ang = 0;
+static int ang = 0, s = 5;
 
 void init(void)
 {
@@ -46,7 +47,11 @@ void display(void) {
 void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'd':
-		ang = (ang + 5) % 360; //aletera o angulo para rotação
+		ang = (ang + s) % 360; //aletera o angulo para rotação
+		glutPostRedisplay(); //redesenha a cena com novas coordenadas, executado no glutmainloop
+		break;
+	case 'D':
+		ang = (ang - s) % 360; //aletera o angulo para rotação
 		glutPostRedisplay(); //redesenha a cena com novas coordenadas, executado no glutmainloop
 		break;
 	case 'q':
@@ -57,6 +62,20 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 }
 
+void mouse(int x, int key, int y, int z) {
+
+	if(key){
+		s = (-s);
+	}
+}
+
+void spin(int x){
+	ang = (ang + s) % 360;
+	glutPostRedisplay();
+	glutTimerFunc(1000/60, spin, 1);
+}
+
+
 int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -66,7 +85,9 @@ int main(int argc, char *argv[]) {
 	init();
 	glutDisplayFunc(display);
 	//glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyboard);					
+	glutKeyboardFunc(keyboard);
+	glutMouseFunc(mouse);
+	glutTimerFunc(1000/60, spin, 1);//fps, funçao, sla o q					
 	glutMainLoop();
 	return 0;
 }
