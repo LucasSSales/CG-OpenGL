@@ -1,10 +1,10 @@
-//#include <Windows.h>
-//#include <GL\glew.h>
-//#include <GL\freeglut.h>
-//#include <iostream>
-#include <GL/gl.h>
-#include <GL/glut.h>
-#include <stdlib.h>
+#include <Windows.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
+#include <iostream>
+//#include <GL/gl.h>
+//#include <GL/glut.h>
+//#include <stdlib.h>
 //g++ Ola.c -o Ola -lGL -lGLU -lglut
 
 static const int squares = 20;
@@ -104,6 +104,8 @@ int main(int argc, char *argv[]) {
 	glutInitDisplayMode(GLUT_RGB);
 	glutInitWindowSize(800, 400);
 	glutCreateWindow("Ola");
+
+
 
 	//chama a funcao init e inicia as propriedades View Port
 	init();
