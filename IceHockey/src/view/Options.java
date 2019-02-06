@@ -141,13 +141,7 @@ public class Options extends javax.swing.JInternalFrame {
     private void okbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okbtnActionPerformed
         // TODO add your handling code here:
         try{
-            Integer w = Integer.parseInt(width.getText());
-            //String c = color.getText();
-            //Color cor = Color.web(c);
-            //System.out.println();
-//            if(!c.startsWith("#") || c.length()>7)
-//                throw new Exception();
-            
+            int w = Integer.parseInt(width.getText());            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ENTRADAS INVÁLIDAS!");
         }
@@ -158,10 +152,8 @@ public class Options extends javax.swing.JInternalFrame {
         String selected = (String) algorithm.getSelectedItem();
         if(selected.equals("Eq. da Reta")){
             //EQ DA RETA
-            //JOptionPane.showMessageDialog(null, "Retas!");
         }else if(selected.equals("Bresenham")){
             //BRESENHAM
-            //JOptionPane.showMessageDialog(null, "bres!");
         }
     }//GEN-LAST:event_algorithmActionPerformed
 
@@ -199,18 +191,6 @@ public class Options extends javax.swing.JInternalFrame {
                 break;
         }
         System.out.println(c);
-        
-        
-
-
-
-
-
-
-
-
-
-
     }//GEN-LAST:event_colorActionPerformed
 
 
