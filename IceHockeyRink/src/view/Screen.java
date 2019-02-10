@@ -19,6 +19,7 @@ import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import opengl.GraphicListener;
 import opengl.MouseInput;
 
@@ -68,12 +69,18 @@ public class Screen extends javax.swing.JFrame {
         setTitle("Ice Hockey");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMinimumSize(new java.awt.Dimension(480, 270));
-        setPreferredSize(new java.awt.Dimension(700, 700));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         jButton1.setText("Change");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        gLCanvas1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gLCanvas1MouseClicked(evt);
             }
         });
 
@@ -191,12 +198,16 @@ public class Screen extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         float[] rgb = new float[3];
-        rgb[0] = (Float.parseFloat(jTextField1.getText())/255);
-        rgb[1] = (Float.parseFloat(jTextField2.getText())/255);
-        rgb[2] = (Float.parseFloat(jTextField3.getText())/255);
-        listener.setColor(rgb);
-        gLCanvas1.addGLEventListener(listener);
-        gLCanvas1.display();
+        try{
+            rgb[0] = (Float.parseFloat(jTextField1.getText())/255);
+            rgb[1] = (Float.parseFloat(jTextField2.getText())/255);
+            rgb[2] = (Float.parseFloat(jTextField3.getText())/255);
+            listener.setColor(rgb);
+            gLCanvas1.addGLEventListener(listener);
+            gLCanvas1.display();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Entrada inválida!");
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -218,7 +229,17 @@ public class Screen extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        this.listener.algorithm = (String) jComboBox1.getSelectedItem();
+        gLCanvas1.addGLEventListener(listener);
+        gLCanvas1.display();
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void gLCanvas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gLCanvas1MouseClicked
+        // TODO add your handling code here:
+        this.listener.setXY(mouse.x, mouse.y);
+        gLCanvas1.addGLEventListener(listener);
+        gLCanvas1.display();
+    }//GEN-LAST:event_gLCanvas1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -254,6 +275,10 @@ public class Screen extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void arquibancada(int x, int y){
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.media.opengl.GLCanvas gLCanvas1;
@@ -273,8 +298,7 @@ public class Screen extends javax.swing.JFrame {
     static GL gl;
     static GLU glu;
     private GraphicListener listener;
-    private MouseInput mouse;
-    
+    private MouseInput mouse;   
 
 
 

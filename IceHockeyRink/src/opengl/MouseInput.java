@@ -20,15 +20,12 @@ public class MouseInput implements MouseListener {
     
     public MouseInput(GraphicListener g){
         this.gl = g;
-        System.out.println(gl.toString());
     }
 
     public void mouseClicked(MouseEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        //System.out.println(e.getX() + " " + e.getY());
-        //this.x = e.getX();
-        //this.y = e.getY();
-        gl.draw(e.getX(), e.getY());
+        this.x = e.getX();
+        this.y = e.getY();
+       // gl.setXY(e.getX(), e.getY());
     }
 
     public void mousePressed(MouseEvent e) {
