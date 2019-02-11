@@ -5,6 +5,7 @@
  */
 package opengl;
 
+import java.util.ArrayList;
 import javax.media.opengl.GL;
 import static opengl.GraphicListener.gl;
 
@@ -31,7 +32,7 @@ public class Functions {
       gl.glPopMatrix();
     }
     
-    void drowLineEq(int x1, int y1, int x2, int y2)
+    void drowLineEq(int x1, int y1, int x2, int y2, int width)
     {
       if(x1 > x2)
       {
@@ -42,43 +43,43 @@ public class Functions {
       for(int i = x1; i < x2; i++)
       {
         int ypoint = (int)(y1 + a*(double)(i-x1));
-        drowPoit(i, ypoint, 2);
+        drowPoit(i, ypoint, width);
       }
     }
-    void drowCircunferenceSegmentLineEq(int x, int y, int r, int quadrant){
+    void drowCircunferenceSegmentLineEq(int x, int y, int r, int quadrant, int width){
       gl.glPushMatrix();
       gl.glTranslated(x, y, 0);
       if(quadrant == 1) {
         for(int i = 0; i < r; i++){
           int ypoint = (int) Math.floor(Math.sqrt(r*r - i*i));
-          drowPoit(i, ypoint, 2);
+          drowPoit(i, ypoint, width);
         }
       }
       if(quadrant == 2) {
         for(int i = 0; i < r; i++){
           int ypoint = (int) Math.floor(Math.sqrt(r*r - i*i));
-          drowPoit(-i, ypoint, 2);
+          drowPoit(-i, ypoint, width);
         }
       }
       if(quadrant == 3) {
         for(int i = 0; i < r; i++){
           int ypoint = (int) Math.floor(-Math.sqrt(r*r - i*i));
-          drowPoit(-i, ypoint, 2);
+          drowPoit(-i, ypoint, width);
         }
       }
       if(quadrant == 4) {
         for(int i = 0; i < r; i++){
           int ypoint = (int) Math.floor(-Math.sqrt(r*r - i*i));
-          drowPoit(i, ypoint, 2);
+          drowPoit(i, ypoint, width);
         }
       }
       gl.glPopMatrix();
     }
-    void drowFullCircunferenceLineEq(int x, int y, int r){
-        for(int i = 1; i  <= 4; i++) drowCircunferenceSegmentLineEq(x, y, r, i);
+    void drowFullCircunferenceLineEq(int x, int y, int r, int width){
+        for(int i = 1; i  <= 4; i++) drowCircunferenceSegmentLineEq(x, y, r, i, width);
     }
 
-    void drowLineMidPoint(int x1, int y1, int x2, int y2){
+    void drowLineMidPoint(int x1, int y1, int x2, int y2, int width){
       if(x1 > x2)
       {
         int aux = x1; x1 = x2; x2 = aux;
@@ -93,7 +94,7 @@ public class Functions {
       x = x1;
       y = y1;
      gl.glPushMatrix();
-      drowPoit(x, y, 2);
+      drowPoit(x, y, width);
       while(x < x2){
         if(d <= 0){
           d += incE;
@@ -103,11 +104,11 @@ public class Functions {
           x+=1;
           y+=1;
         }
-        drowPoit(x, y, 2);
+        drowPoit(x, y, width);
       }
       gl.glPopMatrix();
     }
-    void drowMidPointCircle(int x1, int y1, int r, int quadrant){
+    void drowMidPointCircle(int x1, int y1, int r, int quadrant, int width){
       gl.glPushMatrix();
       gl.glTranslated(x1, y1, 0);
       if(quadrant == 1){
@@ -118,8 +119,8 @@ public class Functions {
         y = r;
         d = 5/4 - r;
 
-        drowPoit(x, y, 2);
-        drowPoit(y, x, 2);
+        drowPoit(x, y, width);
+        drowPoit(y, x, width);
         while(y > x){
           if(d < 0){
             d += 2*x+3;
@@ -129,8 +130,8 @@ public class Functions {
             x++;
             y--;
           }
-          drowPoit(x, y, 2);
-          drowPoit(y, x, 2);
+          drowPoit(x, y, width);
+          drowPoit(y, x, width);
         }
       }
       if(quadrant == 2){
@@ -141,8 +142,8 @@ public class Functions {
         y = r;
         d = 5/4 - r;
 
-        drowPoit(-x, y, 2);
-        drowPoit(-y, x, 2);
+        drowPoit(-x, y, width);
+        drowPoit(-y, x, width);
         while(y > x){
           if(d < 0){
             d += 2*x+3;
@@ -152,8 +153,8 @@ public class Functions {
             x++;
             y--;
           }
-          drowPoit(-x, y, 2);
-          drowPoit(-y, x, 2);
+          drowPoit(-x, y, width);
+          drowPoit(-y, x, width);
         }
       }
       if(quadrant == 4){
@@ -164,8 +165,8 @@ public class Functions {
         y = r;
         d = 5/4 - r;
 
-        drowPoit(x, -y, 2);
-        drowPoit(y, -x, 2);
+        drowPoit(x, -y, width);
+        drowPoit(y, -x, width);
 
         while(y > x){
           if(d < 0){
@@ -176,8 +177,8 @@ public class Functions {
             x++;
             y--;
           }
-          drowPoit(x, -y, 2);
-          drowPoit(y, -x, 2);
+          drowPoit(x, -y, width);
+          drowPoit(y, -x, width);
         }
       }
       if(quadrant == 3){
@@ -188,8 +189,8 @@ public class Functions {
         y = r;
         d = 5/4 - r;
 
-        drowPoit(-y, -x, 2);
-        drowPoit(-x, -y, 2);
+        drowPoit(-y, -x, width);
+        drowPoit(-x, -y, width);
         while(y > x){
           if(d < 0){
             d += 2*x+3;
@@ -199,14 +200,15 @@ public class Functions {
             x++;
             y--;
           }
-          drowPoit(-y, -x, 2);
-          drowPoit(-x, -y, 2);
+          drowPoit(-y, -x, width);
+          drowPoit(-x, -y, width);
         }
       }
       gl.glPopMatrix();
     }
-    void drowFullCircunferenceMidPoint(int x, int y, int r)
+    void drowFullCircunferenceMidPoint(int x, int y, int r, int width)
     {
-      for(int i = 1; i <= 4; i++) drowMidPointCircle(x, y, r, i);
+      for(int i = 1; i <= 4; i++) drowMidPointCircle(x, y, r, i, width);
     }
+    
 }
