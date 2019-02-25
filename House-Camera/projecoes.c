@@ -3,8 +3,6 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
-/*casa com camera*/
-
 void init(void);
 void display(void);
 void keyboard(unsigned char key, int x, int y);
@@ -186,13 +184,13 @@ void keyboard(unsigned char key, int x, int y){
   case 'D':
     glLoadIdentity();
     gluPerspective(65.0, (GLfloat) largura/(GLfloat) altura, 20.0, 120.0);
-    gluLookAt(camx, camy, camz, --px, py, pz, 0, 1, 0);
+    gluLookAt(camx, camy, camz, ++px, py, --pz, 0, 1, 0);
     glutPostRedisplay();
     break;
   case 'A':
     glLoadIdentity();
     gluPerspective(65.0, (GLfloat) largura/(GLfloat) altura, 20.0, 120.0);
-    gluLookAt(camx, camy, camz, ++px, py, pz, 0, 1, 0);
+    gluLookAt(camx, camy, camz, --px, py, ++pz, 0, 1, 0);
     glutPostRedisplay();
     break;
   case 'W':
