@@ -3,6 +3,8 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
+/*casa com camera*/
+
 void init(void);
 void display(void);
 void keyboard(unsigned char key, int x, int y);
