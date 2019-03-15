@@ -18,7 +18,7 @@
 float lx = 0.0f, lz = -1.0f, ly = 0.0f;
 
 // XZ position of the camera
-float x = 0.0f, z = 70.0f, thy = 10.0f;
+float x = 0.0f, z = 600.0f, thy = 30.0f;
 
 float door_angle = 0.0f;
 
@@ -29,6 +29,7 @@ float yangle = 0.0f;
 void init(void) {
 	// sky color
 	glClearColor(0.0, 0.7, 1.0, 1.0);
+	//glOrtho(0,0,0,0,0,0);
 }
 
 
@@ -44,184 +45,98 @@ void drawDoor() {
 
 }
 
-void drawFloor() {
+void drawDegrau(float x, float y1, float y2, float z) {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, 0.0f);
 	glColor3f(0.752941f, 0.752941f, 0.752941f);
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(-20, 1, 10);
-	glVertex3f(-20, 0, 10);
-	glVertex3f(20, 0, 10);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(20, 1, -70);
-	glVertex3f(20, 0, -70);
-	glVertex3f(20, 0, 10);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, -70);
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 0, -70);
-	glVertex3f(20, 0, -70);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 1, 10);
-	glVertex3f(-20, 0, 10);
-	glVertex3f(-20, 0, -70);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(20, 1, -70);
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 1, 10);
-	glEnd();
-	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glColor3f(0.7f, 0.7f, 0.7f);
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(22, 0.5, 12);
-	glVertex3f(-22, 0.5, 12);
-	glVertex3f(-22, 0, 12);
-	glVertex3f(22, 0, 12);
+	glVertex3f(x, y2, z);
+	glVertex3f(-x, y2, z);
+	glVertex3f(-x, y1, z);
+	glVertex3f(x, y1, z);
 	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(22, 0.5, 12);
-	glVertex3f(22, 0.5, -72);
-	glVertex3f(22, 0, -72);
-	glVertex3f(22, 0, 12);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(22, 0.5, -72);
-	glVertex3f(-22, 0.5, -72);
-	glVertex3f(-22, 0, -72);
-	glVertex3f(22, 0, -72);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-22, 0.5, -72);
-	glVertex3f(-22, 0.5, 12);
-	glVertex3f(-22, 0, 12);
-	glVertex3f(-22, 0, -72);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(22, 0.5, 12);
-	glVertex3f(22, 0.5, -72);
-	glVertex3f(-22, 0.5, -72);
-	glVertex3f(-22, 0.5, 12);
-	glEnd();
-	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glColor3f(0.7f, 0.7f, 0.7f);
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(10, 1.5, 0);
-	glVertex3f(-10, 1.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(10, 0, 0);
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y2, -z);
+	glVertex3f(x, y1, -z);
+	glVertex3f(x, y1, z);
 	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(10, 1.5, 0);
-	glVertex3f(10, 1.5, -60);
-	glVertex3f(10, 0, -60);
-	glVertex3f(10, 0, 0);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(10, 1.5, -60);
-	glVertex3f(-10, 1.5, -60);
-	glVertex3f(-10, 0, -60);
-	glVertex3f(10, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-10, 1.5, -60);
-	glVertex3f(-10, 1.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(-10, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(10, 1.5, 0);
-	glVertex3f(10, 1.5, -60);
-	glVertex3f(-10, 1, -60);
-	glVertex3f(-10, 1, 0);
-	glEnd();
-	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(10.0f, 0.0f, 0.0f);
-	glRotatef(90, 0, 0, 1);
-	glColor3f(0.7f, 0.7f, 0.7f);
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(16, 0.5, 0);
-	glVertex3f(-10, 0.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(16, 0, 0);
+	glVertex3f(x, y2, -z);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y1, -z);
+	glVertex3f(x, y1, -z);
 	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(16, 0.5, 0);
-	glVertex3f(16, 0.5, -60);
-	glVertex3f(16, 0, -60);
-	glVertex3f(16, 0, 0);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(16, 0.5, -60);
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0, -60);
-	glVertex3f(16, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(-10, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(16, 0.5, 0);
-	glVertex3f(16, 0.5, -60);
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0.5, 0);
-	glEnd();
-	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(-10.0f, 0.0f, 0.0f);
-	glRotatef(90, 0, 0, 1);
-	glColor3f(0.7f, 0.7f, 0.7f);
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(17, 0.5, 0);
-	glVertex3f(-10, 0.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(17, 0, 0);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y2, z);
+	glVertex3f(-x, y1, z);
+	glVertex3f(-x, y1, -z);
 	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(17, 0.5, 0);
-	glVertex3f(17, 0.5, -60);
-	glVertex3f(17, 0, -60);
-	glVertex3f(17, 0, 0);
+
+	glColor3f(1.0, 0.753f, 0.753f);
+	glBegin(GL_QUADS);  // Chao
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y2, -z);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y2, z);
 	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(17, 0.5, -60);
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0, -60);
-	glVertex3f(17, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0.5, 0);
-	glVertex3f(-10, 0, 0);
-	glVertex3f(-10, 0, -60);
-	glEnd();
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(17, 0.5, 0);
-	glVertex3f(17, 0.5, -60);
-	glVertex3f(-10, 0.5, -60);
-	glVertex3f(-10, 0.5, 0);
-	glEnd();
+
 	glPopMatrix();
 }
+
+void drawWall(float x, float y1, float y2, float z) {
+
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glColor3f(0.1f, 0.0f, 1.0f);
+
+	glBegin(GL_QUADS);  // Wall
+	glVertex3f(x, y1, z);
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y2, -z);
+	glVertex3f(x, y1, -z);
+	glEnd();
+
+	glPopMatrix();
+}
+
+void drawWall2(float x, float y1, float y2, float z) {
+
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glColor3f(0.1f, 1.0f, 0.0f);
+
+	glBegin(GL_QUADS);  // Wall
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y1, z);
+	glVertex3f(-x, y1, z);
+	glVertex3f(-x, y2, z);
+	glEnd();
+
+	glPopMatrix();
+}
+
+void drawWall3(float x1, float x2, float y1, float y2, float z) {
+
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	glBegin(GL_QUADS);  // Wall
+	glVertex3f(x1, y2, z);
+	glVertex3f(x1, y1, z);
+	glVertex3f(x2, y1, z);
+	glVertex3f(x2, y2, z);
+	glEnd();
+
+	glPopMatrix();
+}
+
 void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz) {
 	GLfloat x = 0.0;
 	GLfloat y = 0.0;
@@ -261,6 +176,33 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz)
 	glPopMatrix();
 }
 
+void drawFloor() {
+	drawDegrau(150, 0, 4, 400);
+	drawDegrau(145, 4, 8, 390);
+	drawDegrau(140, 8, 12, 380);
+	drawDegrau(95, 12, 16, 310);
+	drawDegrau(90, 16, 20, 300);
+
+	float h = 150 +16;
+
+	drawWall(90, 20, h, 270);
+	drawWall(80, 20, h, 270);
+	drawWall(-80, 20, h, -270);
+	drawWall(-90, 20, h, -270);
+
+	drawWall2(80, 20, h, -120);
+	drawWall2(80, 20, h, -130);
+
+	drawWall3(90, 80, 20, h, 270);
+	drawWall3(90, 80, 20, h, -270);
+
+	drawWall3(-90, -80, 20, h, 270);
+	drawWall3(-90, -80, 20, h, -270);
+}
+
+
+
+
 void changeSize(int w, int h) {
 
 	// Prevent a divide by zero, when window is too short
@@ -278,74 +220,83 @@ void changeSize(int w, int h) {
 	glViewport(0, 0, w, h);
 
 	// Set the correct perspective.
-	gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+	gluPerspective(45.0f, ratio, 0.1f, 2000.0f);
 
 	// Get Back to the Modelview
 	glMatrixMode(GL_MODELVIEW);
 }
-void drawRoof() {
+void drawRoof(float x, float y1, float y2, float y3, float z) {
+
+
+	//drawDegrau(140, 8, 12, 380);
+
+
 	glPushMatrix();
-	glTranslatef(0.0f, 16.0f, 0.0f);
+	glTranslatef(0.0f, 160.0f, 0.0f);
 	glColor3f(0.752941f, 0.752941f, 0.752941f);
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(-20, 1, 10);
-	glVertex3f(-20, 0, 10);
-	glVertex3f(20, 0, 10);
+	glVertex3f(x, y2, z);
+	glVertex3f(-x, y2, z);
+	glVertex3f(-x, y1, z);
+	glVertex3f(x, y1, z);
 	glEnd();
 
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(20, 1, -70);
-	glVertex3f(20, 0, -70);
-	glVertex3f(20, 0, 10);
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y2, -z);
+	glVertex3f(x, y1, -z);
+	glVertex3f(x, y1, z);
 	glEnd();
 
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, -70);
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 0, -70);
-	glVertex3f(20, 0, -70);
+	glVertex3f(x, y2, -z);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y1, -z);
+	glVertex3f(x, y1, -z);
 	glEnd();
 
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 1, 10);
-	glVertex3f(-20, 0, 10);
-	glVertex3f(-20, 0, -70);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y2, z);
+	glVertex3f(-x, y1, z);
+	glVertex3f(-x, y1, -z);
 	glEnd();
 
 	glBegin(GL_QUADS);  // Wall
-	glVertex3f(20, 1, 10);
-	glVertex3f(20, 1, -70);
-	glVertex3f(-20, 1, -70);
-	glVertex3f(-20, 1, 10);
+	glVertex3f(x, y2, z);
+	glVertex3f(x, y2, -z);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(-x, y2, z);
 	glEnd();
 
+	glColor3f(0.0f, 1.0f, 1.0f);
 	glBegin(GL_TRIANGLES);  // Triangulo da frente do Telhado
-	glVertex3f(-20, 1, 10);
-	glVertex3f(0, 7, 10);
-	glVertex3f(20, 1, 10);
+	glVertex3f(-x, y2, z);
+	glVertex3f(0, y3, z);
+	glVertex3f(x, y2, z);
 	glEnd();
 
+	glColor3f(0.5f, 1.0f, 1.0f);
 	glBegin(GL_POLYGON);  // Lateral esquerda do telhado
-	glVertex3f(-20, 1, 10);
-	glVertex3f(0, 7, 10);
-	glVertex3f(-20, 1, -70);
-	glVertex3f(0, 7, -70);
+	glVertex3f(-x, y2, z);
+	glVertex3f(0, y3, z);
+	glVertex3f(0, y3, -z);
+	glVertex3f(-x, y2, -z);
 	glEnd();
 
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glBegin(GL_POLYGON);  // Lateral direita do telhado
-	glVertex3f(20, 1, 10);
-	glVertex3f(0, 7, 10);
-	glVertex3f(0, 7, -70);
-	glVertex3f(20, 1, -70);
+	glVertex3f(x, y2, z);
+	glVertex3f(0, y3, z);
+	glVertex3f(0, y3, -z);
+	glVertex3f(x, y2, -z);
 	glEnd();
 
+	glColor3f(1.0f, 0.5f, 1.0f);
 	glBegin(GL_TRIANGLES);  // Triangulo de tras do Telhado
-	glVertex3f(-20, 1, -70);
-	glVertex3f(0, 7, -70);
-	glVertex3f(20, 1, -70);
+	glVertex3f(-x, y2, -z);
+	glVertex3f(0, y3, -z);
+	glVertex3f(x, y2, -z);
 	glEnd();
 
 	glPopMatrix();
@@ -365,48 +316,61 @@ void renderScene(void) {
 
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
+	//gluLookAt(0, 350, 5, 0, 0, 0, 0, 1, 0);
 
 	// Draw ground
 	glColor3f(0.0, 0.65, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(-100.0f, 0.0f, -100.0f);
-	glVertex3f(-100.0f, 0.0f, 100.0f);
-	glVertex3f(100.0f, 0.0f, 100.0f);
-	glVertex3f(100.0f, 0.0f, -100.0f);
+	glVertex3f(-1000.0f, 0.0f, -1000.0f);
+	glVertex3f(-1000.0f, 0.0f, 1000.0f);
+	glVertex3f(1000.0f, 0.0f, 1000.0f);
+	glVertex3f(1000.0f, 0.0f, -1000.0f);
 	glEnd();
 
 	//drawHouse();
 	//drawDoor();
 	drawFloor();
-	drawDoor();
-	drawRoof();
-	for (int i = -18; i <= 18; i += 4) {
-		draw_cylinder(1, 15, i, 1, 8);
+	//drawDoor();
+	drawRoof(140, 0, 30, 80, 380);
+
+	int h = 150;
+	//COLUNAS FACHADA
+	for (int i = -127; i < 0; i += 35) {
+		draw_cylinder(8, h, i, 12, 367);
 	}
-	for (int i = -18; i <= 18; i += 4) {
-		draw_cylinder(1, 15, i, 1, -68);
+	for (int i = 127; i > 0; i -= 35) {
+		draw_cylinder(8, h, i, 12, 367);
 	}
-	for (int i = 8; i >= -68; i -= 4) {
-		draw_cylinder(1, 15, -18, 1, i);
+	//COLUNAS FUNDOS
+	for (int i = -127; i < 0; i += 35) {
+		draw_cylinder(8, h, i, 12, -367);
 	}
-	for (int i = 8; i >= -68; i -= 4) {
-		draw_cylinder(1, 15, 18, 1, i);
+	for (int i = 127; i > 0; i -= 35) {
+		draw_cylinder(8, h, i, 12, -367);
 	}
-	for (int i = -8; i <= 8; i += 4) {
-		draw_cylinder(1, 15, i, 1, -2);
+	//COLUNAS LATERIAS
+	for (int i = -367; i <= 367; i += 35) {
+		draw_cylinder(8, h, 127, 12, i);
 	}
-	for (int i = -8; i <= 8; i += 4) {
-		draw_cylinder(1, 15, i, 1, -58);
+	for (int i = -367; i <= 367; i += 35) {
+		draw_cylinder(8, h, -127, 12, i);
 	}
-	for (int i = -15; i >= -35; i -= 4) {
-		draw_cylinder(0.3, 15, -5, 1, i);
+
+	//COLUNAS INTERNAS ENTRADA
+	for (int i = -75; i < 0; i += 30) {
+		draw_cylinder(7, h-8, i, 20, 290);
 	}
-	for (int i = -15; i >= -35; i -= 4) {
-		draw_cylinder(0.3, 15, 5, 1, i);
+	for (int i = 75; i > 0; i -= 30) {
+		draw_cylinder(7, h-8, i, 20, 290);
 	}
-	for (int i = -5; i <= 5; i += 2) {
-		draw_cylinder(0.3, 15, i, 1, -35);
+	//COLUNAS INTERNAS ENTRADA
+	for (int i = -75; i < 0; i += 30) {
+		draw_cylinder(7, h - 8, i, 20, -290);
 	}
+	for (int i = 75; i > 0; i -= 30) {
+		draw_cylinder(7, h - 8, i, 20, -290);
+	}
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -443,7 +407,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 
 void processSpecialKeys(int key, int xx, int yy) {
 
-	float fraction = 0.5f;
+	float fraction = 3.0f;//botar de volta para 1.0f
 
 	switch (key) {
 
@@ -475,7 +439,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(50, 50);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("House 3D");
+	glutCreateWindow("Paternon");
 
 	init();
 
