@@ -1,9 +1,11 @@
-#include <Windows.h>
+/*#include <Windows.h>
 #include <GL\glew.h>
 #include <GL\freeglut.h>
-#include <iostream>
+#include <iostream>*/
 
 //#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -33,17 +35,7 @@ void init(void) {
 }
 
 
-void drawDoor() {
-	glPushMatrix();
-	glTranslatef(0, 2, -10);
-	glRotatef(door_angle, 0, 1, 0);
-	glTranslatef(0.3f, 0, 0);
-	glColor3f(0.7f, 0.7f, 0.65f);
-	glScalef(0.6, 1.1, 0.1f);
-	glutSolidCube(10.0);
-	glPopMatrix();
 
-}
 
 void drawDegrau(float x, float y1, float y2, float z) {
 	glPushMatrix();
@@ -176,28 +168,90 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz)
 	glPopMatrix();
 }
 
+void drawBox(float x, float y, float z, float height, float width, float length){
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	glColor3f(0.0f, 1.0f, 1.0f);
+
+	glBegin(GL_QUADS);
+	glVertex3f(x+width/2, y+height, z+length/2);
+	glVertex3f(x+width/2, y, z+length/2);
+	glVertex3f((x-width/2), y, z+length/2);
+	glVertex3f((x-width/2), y+height, z+length/2);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex3f(x+width/2, y+height, (z-length/2));
+	glVertex3f(x+width/2, y, (z-length/2));
+	glVertex3f((x-width/2), y, (z-length/2));
+	glVertex3f((x-width/2), y+height, (z-length/2));
+	glEnd();
+
+	glColor3f(0.5f, 1.0f, 1.0f);
+	glBegin(GL_QUADS);
+	glVertex3f((x-width/2), y+height, (z+length/2));
+	glVertex3f((x-width/2), y, (z+length/2));
+	glVertex3f((x-width/2), y, (z-length/2));
+	glVertex3f((x-width/2), y+height, (z-length/2));
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex3f(x+width/2, y+height, (z+length/2));
+	glVertex3f(x+width/2, y, (z+length/2));
+	glVertex3f(x+width/2, y, (z-length/2));
+	glVertex3f(x+width/2, y+height, z-length/2);
+	glEnd();
+
+	glColor3f(0.5f, 1.0f, 0.5f);
+	glBegin(GL_QUADS);
+	glVertex3f((x+width/2), y+height, (z+length/2));
+	glVertex3f(x-width/2, y+height, z+length/2);
+	glVertex3f(x-width/2, y+height, z-length/2);
+	glVertex3f((x+width/2), y+height, z-length/2);
+	glEnd();
+
+	glPopMatrix();
+}
+
+void drawDoor() {
+	glPushMatrix();
+	glTranslatef(-20, 20, 245);
+	glRotatef(door_angle, 0, 1, 0);
+	glTranslatef(20, 0, 0);
+	glColor3f(0.7f, 0.7f, 0.65f);
+	//glScalef(0.6, 1.1, 0.1f);
+	//glutSolidCube(100.0);
+	drawBox(0, 0, 0, 150, 40, 7);
+	glPopMatrix();
+
+}
+
 void drawFloor() {
+	//DEGRAUS
 	drawDegrau(150, 0, 4, 400);
 	drawDegrau(145, 4, 8, 390);
 	drawDegrau(140, 8, 12, 380);
 	drawDegrau(95, 12, 16, 310);
 	drawDegrau(90, 16, 20, 300);
 
-	float h = 150 +16;
+	float h = 150;
 
-	drawWall(90, 20, h, 270);
-	drawWall(80, 20, h, 270);
-	drawWall(-80, 20, h, -270);
-	drawWall(-90, 20, h, -270);
+	//PAREDES PRINCIPAIS
+	//drawBox(85, 20, 0, 20+h, 10, 540);
+	//drawBox(-85, 20, 0, 20+h, 10, 540);
 
-	drawWall2(80, 20, h, -120);
-	drawWall2(80, 20, h, -130);
+	//DIVISORIA
+	//drawBox(0, 20, -95, 20+h, 180, 10); //H, W, L
 
-	drawWall3(90, 80, 20, h, 270);
-	drawWall3(90, 80, 20, h, -270);
+	//BORDAS
+	drawBox(50, 20, 245, 20+h, 60, 10);
+	//drawBox(50, 20, -245, 20+h, 60, 10);
+	drawBox(-50, 20, 245, 20+h, 60, 10);
+	//drawBox(-50, 20, -245, 20+h, 60, 10);
 
-	drawWall3(-90, -80, 20, h, 270);
-	drawWall3(-90, -80, 20, h, -270);
+	//PEDESTAL DA ESTATUA
+	//drawBox(0, 20, 0, 20, 40, 40);
+
 }
 
 
@@ -227,14 +281,11 @@ void changeSize(int w, int h) {
 }
 void drawRoof(float x, float y1, float y2, float y3, float z) {
 
-
-	//drawDegrau(140, 8, 12, 380);
-
-
 	glPushMatrix();
-	glTranslatef(0.0f, 160.0f, 0.0f);
+	glTranslatef(0.0f, 150.0f, 0.0f);
 	glColor3f(0.752941f, 0.752941f, 0.752941f);
-	glBegin(GL_QUADS);  // Wall
+
+	glBegin(GL_QUADS);
 	glVertex3f(x, y2, z);
 	glVertex3f(-x, y2, z);
 	glVertex3f(-x, y1, z);
@@ -330,10 +381,11 @@ void renderScene(void) {
 	//drawHouse();
 	//drawDoor();
 	drawFloor();
-	//drawDoor();
-	drawRoof(140, 0, 30, 80, 380);
+	drawDoor();
+	//drawRoof(140, 0, 30, 80, 380);
 
-	int h = 150;
+	/*int h = 150;
+	
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
 		draw_cylinder(8, h, i, 12, 367);
@@ -370,6 +422,27 @@ void renderScene(void) {
 	for (int i = 75; i > 0; i -= 30) {
 		draw_cylinder(7, h - 8, i, 20, -290);
 	}
+
+
+
+	//COLUNAS INTERNAS DAS VIRGENS
+	draw_cylinder(8, h - 8, 40, 20, -150);
+	draw_cylinder(8, h - 8, 40, 20, -209);
+
+	draw_cylinder(8, h - 8, -40, 20, -150);
+	draw_cylinder(8, h - 8, -40, 20, -209);
+
+	//COLUNA ESTATUA ATENA
+	int last = 0; 
+	for (int i = -58; i < 62; i += 22) {
+		last = i;
+		draw_cylinder(6, h, i, 12, -50);
+	}
+
+	for (int i = -25; i < 240; i += 25) {
+		draw_cylinder(6, h, -58, 12, i);
+		draw_cylinder(6, h, last, 12, i);
+	}*/
 
 	glFlush();
 	glutSwapBuffers();
