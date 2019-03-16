@@ -31,11 +31,7 @@ float yangle = 0.0f;
 void init(void) {
 	// sky color
 	glClearColor(0.0, 0.7, 1.0, 1.0);
-	//glOrtho(0,0,0,0,0,0);
 }
-
-
-
 
 void drawDegrau(float x, float y1, float y2, float z) {
 	glPushMatrix();
@@ -81,54 +77,6 @@ void drawDegrau(float x, float y1, float y2, float z) {
 	glPopMatrix();
 }
 
-void drawWall(float x, float y1, float y2, float z) {
-
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glColor3f(0.1f, 0.0f, 1.0f);
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y1, z);
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y2, -z);
-	glVertex3f(x, y1, -z);
-	glEnd();
-
-	glPopMatrix();
-}
-
-void drawWall2(float x, float y1, float y2, float z) {
-
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glColor3f(0.1f, 1.0f, 0.0f);
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y1, z);
-	glVertex3f(-x, y1, z);
-	glVertex3f(-x, y2, z);
-	glEnd();
-
-	glPopMatrix();
-}
-
-void drawWall3(float x1, float x2, float y1, float y2, float z) {
-
-	glPushMatrix();
-	glTranslatef(0.0f, 0.0f, 0.0f);
-	glColor3f(1.0f, 0.0f, 0.0f);
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x1, y2, z);
-	glVertex3f(x1, y1, z);
-	glVertex3f(x2, y1, z);
-	glVertex3f(x2, y2, z);
-	glEnd();
-
-	glPopMatrix();
-}
-
 void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz) {
 	GLfloat x = 0.0;
 	GLfloat y = 0.0;
@@ -168,60 +116,71 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz)
 	glPopMatrix();
 }
 
-void drawBox(float x, float y, float z, float height, float width, float length){
+void drawBox(float x, float y, float z, float height, float width, float length) {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, 0.0f);
 	glColor3f(0.0f, 1.0f, 1.0f);
 
 	glBegin(GL_QUADS);
-	glVertex3f(x+width/2, y+height, z+length/2);
-	glVertex3f(x+width/2, y, z+length/2);
-	glVertex3f((x-width/2), y, z+length/2);
-	glVertex3f((x-width/2), y+height, z+length/2);
+	glVertex3f(x + width / 2, y + height, z + length / 2);
+	glVertex3f(x + width / 2, y, z + length / 2);
+	glVertex3f((x - width / 2), y, z + length / 2);
+	glVertex3f((x - width / 2), y + height, z + length / 2);
 	glEnd();
 
 	glBegin(GL_QUADS);
-	glVertex3f(x+width/2, y+height, (z-length/2));
-	glVertex3f(x+width/2, y, (z-length/2));
-	glVertex3f((x-width/2), y, (z-length/2));
-	glVertex3f((x-width/2), y+height, (z-length/2));
+	glVertex3f(x + width / 2, y + height, (z - length / 2));
+	glVertex3f(x + width / 2, y, (z - length / 2));
+	glVertex3f((x - width / 2), y, (z - length / 2));
+	glVertex3f((x - width / 2), y + height, (z - length / 2));
 	glEnd();
 
 	glColor3f(0.5f, 1.0f, 1.0f);
 	glBegin(GL_QUADS);
-	glVertex3f((x-width/2), y+height, (z+length/2));
-	glVertex3f((x-width/2), y, (z+length/2));
-	glVertex3f((x-width/2), y, (z-length/2));
-	glVertex3f((x-width/2), y+height, (z-length/2));
+	glVertex3f((x - width / 2), y + height, (z + length / 2));
+	glVertex3f((x - width / 2), y, (z + length / 2));
+	glVertex3f((x - width / 2), y, (z - length / 2));
+	glVertex3f((x - width / 2), y + height, (z - length / 2));
 	glEnd();
 
 	glBegin(GL_QUADS);
-	glVertex3f(x+width/2, y+height, (z+length/2));
-	glVertex3f(x+width/2, y, (z+length/2));
-	glVertex3f(x+width/2, y, (z-length/2));
-	glVertex3f(x+width/2, y+height, z-length/2);
+	glVertex3f(x + width / 2, y + height, (z + length / 2));
+	glVertex3f(x + width / 2, y, (z + length / 2));
+	glVertex3f(x + width / 2, y, (z - length / 2));
+	glVertex3f(x + width / 2, y + height, z - length / 2);
 	glEnd();
 
 	glColor3f(0.5f, 1.0f, 0.5f);
 	glBegin(GL_QUADS);
-	glVertex3f((x+width/2), y+height, (z+length/2));
-	glVertex3f(x-width/2, y+height, z+length/2);
-	glVertex3f(x-width/2, y+height, z-length/2);
-	glVertex3f((x+width/2), y+height, z-length/2);
+	glVertex3f((x + width / 2), y + height, (z + length / 2));
+	glVertex3f(x - width / 2, y + height, z + length / 2);
+	glVertex3f(x - width / 2, y + height, z - length / 2);
+	glVertex3f((x + width / 2), y + height, z - length / 2);
 	glEnd();
 
 	glPopMatrix();
 }
 
-void drawDoor() {
+void drawDoorBox() {
+
+}
+
+
+void drawDoor(float x, float y, float z, char angle) {
 	glPushMatrix();
-	glTranslatef(-20, 20, 245);
-	glRotatef(door_angle, 0, 1, 0);
-	glTranslatef(20, 0, 0);
-	glColor3f(0.7f, 0.7f, 0.65f);
+	glTranslatef(-x, y, z); 
+	glRotatef(angle, 0, 1, 0);
+	//	glTranslatef(5, 0, 5);
+
+	if(x>0)
+		drawBox(10, 0, 1.5, 150, 20, 3);
+	else
+		drawBox(-10, 0, 1.5, 150, 20, 3);
+	
+	//glColor3f(0.7f, 0.7f, 0.65f);
 	//glScalef(0.6, 1.1, 0.1f);
 	//glutSolidCube(100.0);
-	drawBox(0, 0, 0, 150, 40, 7);
+	
 	glPopMatrix();
 
 }
@@ -237,20 +196,20 @@ void drawFloor() {
 	float h = 150;
 
 	//PAREDES PRINCIPAIS
-	//drawBox(85, 20, 0, 20+h, 10, 540);
-	//drawBox(-85, 20, 0, 20+h, 10, 540);
+	drawBox(85, 20, 0, 20+h, 10, 540);
+	drawBox(-85, 20, 0, 20+h, 10, 540);
 
 	//DIVISORIA
-	//drawBox(0, 20, -95, 20+h, 180, 10); //H, W, L
+	drawBox(0, 20, -95, 20+h, 180, 10); //H, W, L
 
 	//BORDAS
-	drawBox(50, 20, 245, 20+h, 60, 10);
-	//drawBox(50, 20, -245, 20+h, 60, 10);
-	drawBox(-50, 20, 245, 20+h, 60, 10);
-	//drawBox(-50, 20, -245, 20+h, 60, 10);
+	drawBox(50, 20, 245, 20 + h, 60, 10);
+	drawBox(50, 20, -245, 20+h, 60, 10);
+	drawBox(-50, 20, 245, 20 + h, 60, 10);
+	drawBox(-50, 20, -245, 20+h, 60, 10);
 
 	//PEDESTAL DA ESTATUA
-	//drawBox(0, 20, 0, 20, 40, 40);
+	drawBox(0, 20, 0, 20, 40, 40);
 
 }
 
@@ -282,7 +241,7 @@ void changeSize(int w, int h) {
 void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 	glPushMatrix();
-	glTranslatef(0.0f, 150.0f, 0.0f);
+	glTranslatef(0.0f, 130.0f, 0.0f);
 	glColor3f(0.752941f, 0.752941f, 0.752941f);
 
 	glBegin(GL_QUADS);
@@ -381,46 +340,50 @@ void renderScene(void) {
 	//drawHouse();
 	//drawDoor();
 	drawFloor();
-	drawDoor();
-	//drawRoof(140, 0, 30, 80, 380);
+	drawDoor(20, 20, 240, door_angle);
+	drawDoor(-20, 20, 240, -door_angle);
 
-	/*int h = 150;
-	
+	drawDoor(20, 20, -240, -door_angle);
+	drawDoor(-20, 20, -240, door_angle);
+	drawRoof(140, 0, 30, 80, 380);
+
+	int h = 150;
+
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
-		draw_cylinder(8, h, i, 12, 367);
+	draw_cylinder(8, h, i, 12, 367);
 	}
 	for (int i = 127; i > 0; i -= 35) {
-		draw_cylinder(8, h, i, 12, 367);
+	draw_cylinder(8, h, i, 12, 367);
 	}
 	//COLUNAS FUNDOS
 	for (int i = -127; i < 0; i += 35) {
-		draw_cylinder(8, h, i, 12, -367);
+	draw_cylinder(8, h, i, 12, -367);
 	}
 	for (int i = 127; i > 0; i -= 35) {
-		draw_cylinder(8, h, i, 12, -367);
+	draw_cylinder(8, h, i, 12, -367);
 	}
 	//COLUNAS LATERIAS
 	for (int i = -367; i <= 367; i += 35) {
-		draw_cylinder(8, h, 127, 12, i);
+	draw_cylinder(8, h, 127, 12, i);
 	}
 	for (int i = -367; i <= 367; i += 35) {
-		draw_cylinder(8, h, -127, 12, i);
+	draw_cylinder(8, h, -127, 12, i);
 	}
 
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h-8, i, 20, 290);
+	draw_cylinder(7, h-8, i, 20, 290);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h-8, i, 20, 290);
+	draw_cylinder(7, h-8, i, 20, 290);
 	}
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h - 8, i, 20, -290);
+	draw_cylinder(7, h - 8, i, 20, -290);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h - 8, i, 20, -290);
+	draw_cylinder(7, h - 8, i, 20, -290);
 	}
 
 
@@ -433,16 +396,16 @@ void renderScene(void) {
 	draw_cylinder(8, h - 8, -40, 20, -209);
 
 	//COLUNA ESTATUA ATENA
-	int last = 0; 
+	int last = 0;
 	for (int i = -58; i < 62; i += 22) {
-		last = i;
-		draw_cylinder(6, h, i, 12, -50);
+	last = i;
+	draw_cylinder(6, h, i, 12, -50);
 	}
 
 	for (int i = -25; i < 240; i += 25) {
-		draw_cylinder(6, h, -58, 12, i);
-		draw_cylinder(6, h, last, 12, i);
-	}*/
+	draw_cylinder(6, h, -58, 12, i);
+	draw_cylinder(6, h, last, 12, i);
+	}
 
 	glFlush();
 	glutSwapBuffers();
