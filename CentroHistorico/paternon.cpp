@@ -373,6 +373,26 @@ void tocha(float x, float y, float z) {
 	glPopMatrix();
 }
 
+void drawbed(float position_x, float position_y, float position_z, float size){
+	float c[3] = {0.7,0,0};
+
+	glPushMatrix();
+	glTranslatef(position_x, position_y, position_z);
+	
+	drawBox(0, size/20, 0, size/10, size/5, size/3, c);
+	c[2] = 0.7;
+	draw_cylinder(size/80, (size/20)+1, size/10 - size/80, 0, size/6 - size/80, c);
+	draw_cylinder(size/80, (size/20)+1, -size/10 + size/80, 0, size/6 - size/80, c);
+	draw_cylinder(size/80, (size/20)+1, -size/10 + size/80, 0, -size/6 + size/80, c);
+	draw_cylinder(size/80, (size/20)+1, size/10 - size/80, 0, -size/6 + size/80, c);
+	c[2] = 0.7;
+	c[0] = 0.7;
+	drawBox(0, size/10, (size/9)-1, size/10, size/7, size/9, c);
+
+	glPopMatrix();
+
+}
+
 void renderScene(void) {
 
 	// Para ver os objetos em modo polígono (somente os traços)	
@@ -386,6 +406,11 @@ void renderScene(void) {
 
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
+	//DrawBed
+	
+	drawbed(15, 20, -120, 70);
+	drawbed(-15, 20, -120, 70);
+
 
 	// Draw ground
 	glColor3f(0.0, 0.65, 0.0);
@@ -482,7 +507,6 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	float fraction = 0.5f;
 	switch (key) {
 	case 'o':
-		printf("%.2f %.2f %.2f ", x, z, y);
 		if (door_angle <= 118.0f) door_angle += 2.0f;
 		glutPostRedisplay();
 		break;
