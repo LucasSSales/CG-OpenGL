@@ -5,11 +5,11 @@
 //g++ Rotacao.c -o Rotacao -lGL -lGLU -lglut
 
 static int year = 0, day = 0, year2 = 0, day2 = 0;
-
+GLfloat position[4] = {1.0, 1.0, 0.0, 1.0};
 void init (void){
 	glClearColor (0.0, 0.0, 0.0, 0.0);
-	GLfloat position[4] = {0.0, 0.0, 0.0, 0.0};
-	glLightfv(GL_LIGHT1, GL_POSITION, position);
+	
+	glLightfv(GL_LIGHT0, GL_AMBIENT, position);
   	glEnable(GL_LIGHTING);
   	glEnable(GL_LIGHT0);
   	glEnable(GL_LIGHT1);
@@ -17,24 +17,32 @@ void init (void){
 
 void display(void){
 	glClear(GL_COLOR_BUFFER_BIT);
-	
-	glPushMatrix();
-		glColor3f(1.0, 1.0, 0.0);
-		glRotatef((GLfloat) year, 0.0, 1.0, 0.0); //(angulo, x, y, z)
-		//glRotatef((GLfloat) day, 0.0, 0.0, 1.0);
-		glutSolidSphere(1.0, 20, 16); //desenha o sol
-	glPopMatrix();
 
+	glPushMatrix();
+	  //glTranslatef(0.0,0.0,0.0);
+	  glMaterialfv(GL_FRONT, GL_EMISSION, position);
+	  glutSolidSphere(1.0, 20, 16); //desenha o sol
+  	glPopMatrix();
 	
 	glPushMatrix();
-		glColor3f(1.0, 0.0, 1.0);
-		glRotatef((GLfloat) year, 0.0, 1.0, 0.0);
+		glutSolidSphere(1.0, 20, 16); //desenha o sol
+		//glColor3f(1.0, 1.0, 0.0);
+		glRotatef((GLfloat) year, 0.0, 1.0, 0.0); //(angulo, x, y, z)
 		glTranslatef(2.0, 0.0, 0.0);
 		glRotatef((GLfloat) day, 0.0, 1.0, 0.0);
 		glutSolidSphere(0.2, 50, 8); //(diametro, linhas h e v)
-	glPopMatrix();//i, 
+	glPopMatrix();
 
-	glColor3f(1.0, 0.0, 1.0);
+	
+	// glPushMatrix();
+	// 	glColor3f(1.0, 0.0, 1.0);
+	// 	glRotatef((GLfloat) year, 0.0, 1.0, 0.0);
+	// 	glTranslatef(2.0, 0.0, 0.0);
+	// 	glRotatef((GLfloat) day, 0.0, 1.0, 0.0);
+	// 	glutSolidSphere(0.2, 50, 8); //(diametro, linhas h e v)
+	// glPopMatrix();//i, 
+
+	//glColor3f(1.0, 0.0, 1.0);
 
 /*	glPushMatrix();
 		glRotatef((GLfloat) year2, 0.0, 1.0, 0.0);
@@ -119,7 +127,7 @@ int main(int argc, char *argv[]) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(500,500);	
 	glutInitWindowPosition(100, 100);					
-	glutCreateWindow("Rotação de Planetas");	
+	glutCreateWindow("Rotacao de Planetas");	
 
 	init(); 
 	glutDisplayFunc(display);					
