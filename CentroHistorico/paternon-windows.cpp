@@ -35,6 +35,19 @@ float gold[3] = { 1, 1, 0 };
 void init(void) {
 	// sky color
 	glClearColor(0.0, 0.7, 1.0, 1.0);
+
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	
+
+	//glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_COLOR_MATERIAL);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
+	//glEnable(GL_NORMALIZE);
 }
 
 void drawDegrau(float x, float y1, float y2, float z) {
@@ -105,7 +118,7 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 	glVertex3f(radius, 0.0, 0.0);
 	glEnd();
 	/** Draw the circle on top of cylinder */
-	
+
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * PI) {
@@ -167,21 +180,21 @@ void drawBox(float x, float y, float z, float height, float width, float length,
 
 void drawDoor(float x, float y, float z, char angle) {
 	glPushMatrix();
-	glTranslatef(-x, y, z); 
+	glTranslatef(-x, y, z);
 	glRotatef(angle, 0, 1, 0);
 	//	glTranslatef(5, 0, 5);
 
 	float color[3] = { 0.7, 0.7, 0.7 };
 
-	if(x>0)
+	if (x>0)
 		drawBox(10, 0, 1.5, 150, 20, 3, color);
 	else
 		drawBox(-10, 0, 1.5, 150, 20, 3, color);
-	
+
 	//glColor3f(0.7f, 0.7f, 0.65f);
 	//glScalef(0.6, 1.1, 0.1f);
 	//glutSolidCube(100.0);
-	
+
 	glPopMatrix();
 
 }
@@ -196,9 +209,9 @@ void drawFloor() {
 
 	float h = 150;
 
-	float wall[3] = {0.6, 0.6, 0.6};
+	float wall[3] = { 0.6, 0.6, 0.6 };
 	float pedestal[3] = { 0.7, 0.7, 0.7 };
-	float ouro[3] = {1, 1, 0};
+	float ouro[3] = { 1, 1, 0 };
 
 	//PAREDES PRINCIPAIS
 	drawBox(85, 20, 0, h, 10, 540, wall);
@@ -207,7 +220,7 @@ void drawFloor() {
 	//DIVISORIA
 	drawBox(0, 20, -95, h, 180, 10, wall); //H, W, L
 
-	//BORDAS
+										   //BORDAS
 	drawBox(50, 20, 245, h, 60, 10, wall);
 	drawBox(50, 20, -245, h, 60, 10, wall);
 	drawBox(-50, 20, 245, h, 60, 10, wall);
@@ -322,41 +335,41 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 void drawChair(float x, float y, float z) {
 
-	float c[3] = {1,0,0};
-	drawBox(x, y+5, z, 0.5, 5, 5, c);
+	float c[3] = { 1,0,0 };
+	drawBox(x, y + 5, z, 0.5, 5, 5, c);
 
 	c[0] = 0;
 	c[2] = 1;
 
-	drawBox(x-2, y, z-2, 5, 1, 1, c);
-	drawBox(x-2, y, z+2, 5, 1, 1, c);
-	drawBox(x+2, y, z-2, 5, 1, 1, c);
-	drawBox(x+2, y, z+2, 5, 1, 1, c);
+	drawBox(x - 2, y, z - 2, 5, 1, 1, c);
+	drawBox(x - 2, y, z + 2, 5, 1, 1, c);
+	drawBox(x + 2, y, z - 2, 5, 1, 1, c);
+	drawBox(x + 2, y, z + 2, 5, 1, 1, c);
 
-	drawBox(x - 2, y+5.5, z - 2, 5, 1, 1, c);
-	drawBox(x + 2, y+5.5, z - 2, 5, 1, 1, c);
+	drawBox(x - 2, y + 5.5, z - 2, 5, 1, 1, c);
+	drawBox(x + 2, y + 5.5, z - 2, 5, 1, 1, c);
 
-	drawBox(x, y+8, z-2, 3.5, 5, 1, c);
+	drawBox(x, y + 8, z - 2, 3.5, 5, 1, c);
 
 }
 
 
 void table(float x, float y, float z) {
 
-	float c[3] = {0, 1, 0};
+	float c[3] = { 0, 1, 0 };
 
 	glPushMatrix();
 	draw_cylinder(12, 0.5, x, y + 8.5, z, brownLight);
 	draw_cylinder(1.5, 8.9, x, y, z, brown);
-	
+
 	glTranslatef(x, y, z);
 	glRotatef(55, 0, 1, 0);
 	drawChair(-3, 0, -12);
 
 	glRotatef(-160, 0, 1, 0);
 	drawChair(-3, 0, -12);
-	
-	
+
+
 	glPopMatrix();
 
 }
@@ -364,8 +377,16 @@ void table(float x, float y, float z) {
 void tocha(float x, float y, float z) {
 	glPushMatrix();
 	glColor3f(1.0f, 1.0f, 0.0f);//Brown
-	draw_cylinder(2, 0.5, x, y, z, gold);
-	draw_cylinder(1, 12, x, y+0.5, z, gold);
+	//draw_cylinder(2, 0.5, x, y, z, gold);
+	//draw_cylinder(1, 12, x, y + 0.5, z, gold);
+	glTranslatef(x, y, z);
+	glRotatef(-90, 1, 0, 0);
+	glutSolidCylinder(2, 0.5, 10, 10);
+	glutSolidCylinder(1, 12, 10, 10);
+	//glTranslatef(-x, -y, -z);
+	glPopMatrix();
+
+	glPushMatrix();
 	glTranslatef(x, y + 14, z);
 	glRotatef(90, 1, 0, 0);
 	glutSolidCone(3.5, 4, 10, 10);
@@ -383,8 +404,43 @@ void renderScene(void) {
 	// Reset transformations
 	glLoadIdentity();
 
+
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
+
+
+	//Ambient Light
+	GLfloat amb[] = {0.3, 0.3, 0.3, 1.0f }; //intensidade/cor
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+
+	//spot light
+	//glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0);
+	GLfloat pos0[] = { 00.0f, 5.0f, 400.0f, 1.0f }; //coordenadas
+	glLightfv(GL_LIGHT0, GL_POSITION, pos0);
+	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 1.0);
+	GLfloat direction[] = { 0.0f, 0.0f, 0.0f, 1.0f }; //coordenadas
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 180.0); //angulo
+												//GLfloat dif0[] = { 0.5f, 0.5f, 0.5f, 0.0f }; //coordenadas
+												//glLightfv(GL_LIGHT0, GL_DIFFUSE, dif0);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 100);//concentração
+
+	//positioned light
+	//GLfloat col0[] = { 1.0f, 0.0f, 0.0f, 1.0f }; //cor
+	//GLfloat pos0[] = { 0.0f, 30.0f, 0.0f, 0.0f }; //coordenadas
+	//glLightfv(GL_LIGHT0, GL_DIFFUSE, col0);
+	//glLightfv(GL_LIGHT0, GL_POSITION, pos0);
+
+	//glShadeModel(GL_SMOOTH);
+
+	//directed light
+	//GLfloat col1[] = { 0.5f, 0.2f, 0.2f, 1.0f }; //cor
+	//GLfloat pos1[] = { -1.0f, 300.0f, 0.5f, 0.0f }; //coordenadas, directed
+	//glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
+	//glLightfv(GL_LIGHT1, GL_POSITION, pos1);
+
+
+
 
 	// Draw ground
 	glColor3f(0.0, 0.65, 0.0);
@@ -394,6 +450,8 @@ void renderScene(void) {
 	glVertex3f(1000.0f, 0.0f, 1000.0f);
 	glVertex3f(1000.0f, 0.0f, -1000.0f);
 	glEnd();
+
+	//draw_cylinder(5, 25, 0, 200, 500, gold);
 
 	//drawHouse();
 	//drawDoor();
@@ -408,43 +466,43 @@ void renderScene(void) {
 	table(0, 20, -176);
 
 	int h = 150;
-	float coluna[3] = {0.5, 0.5, 0.5};
-	
+	float coluna[3] = { 0.5, 0.5, 0.5 };
+
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
-	draw_cylinder(8, h, i, 12, 367, coluna);
+		draw_cylinder(8, h, i, 12, 367, coluna);
 	}
 	for (int i = 127; i > 0; i -= 35) {
-	draw_cylinder(8, h, i, 12, 367, coluna);
+		draw_cylinder(8, h, i, 12, 367, coluna);
 	}
 	//COLUNAS FUNDOS
 	for (int i = -127; i < 0; i += 35) {
-	draw_cylinder(8, h, i, 12, -367, coluna);
+		draw_cylinder(8, h, i, 12, -367, coluna);
 	}
 	for (int i = 127; i > 0; i -= 35) {
-	draw_cylinder(8, h, i, 12, -367,coluna);
+		draw_cylinder(8, h, i, 12, -367, coluna);
 	}
 	//COLUNAS LATERIAS
 	for (int i = -367; i <= 367; i += 35) {
-	draw_cylinder(8, h, 127, 12, i, coluna);
+		draw_cylinder(8, h, 127, 12, i, coluna);
 	}
 	for (int i = -367; i <= 367; i += 35) {
-	draw_cylinder(8, h, -127, 12, i, coluna);
+		draw_cylinder(8, h, -127, 12, i, coluna);
 	}
 
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-	draw_cylinder(7, h-8, i, 20, 290, coluna);
+		draw_cylinder(7, h - 8, i, 20, 290, coluna);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-	draw_cylinder(7, h-8, i, 20, 290, coluna);
+		draw_cylinder(7, h - 8, i, 20, 290, coluna);
 	}
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-	draw_cylinder(7, h - 8, i, 20, -290,coluna);
+		draw_cylinder(7, h - 8, i, 20, -290, coluna);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-	draw_cylinder(7, h - 8, i, 20, -290, coluna);
+		draw_cylinder(7, h - 8, i, 20, -290, coluna);
 	}
 
 	//COLUNAS INTERNAS DAS VIRGENS
@@ -468,8 +526,9 @@ void renderScene(void) {
 
 	for (int i = 70; i < 200; i += 30) {
 		tocha(-38, 20, i);
-		tocha(last-20, 20, i);
+		tocha(last - 20, 20, i);
 	}
+
 
 
 	glFlush();
