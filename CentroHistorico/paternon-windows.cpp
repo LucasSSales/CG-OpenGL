@@ -898,7 +898,7 @@ void divineLight(float zz) {
 		}
 		else if (lastz > zz)
 			blue -= 0.02;
-		else
+		else if(lastz < zz)
 			blue += 0.02;
 	}
 	else {
