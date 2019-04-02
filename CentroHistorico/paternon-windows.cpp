@@ -428,6 +428,17 @@ void drawBox(float x, float y, float z, float height, float width, float length,
 	glVertex3f((x + width / 2), y + height, z - length / 2);
 	glEnd();
 
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f((x + width / 2), y, (z + length / 2));
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(x - width / 2, y, z + length / 2);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(x - width / 2, y, z - length / 2);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f((x + width / 2), y, z - length / 2);
+	glEnd();
+
 	glPopMatrix();
 }
 
@@ -515,11 +526,12 @@ void changeSize(int w, int h) {
 void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 	glPushMatrix();
-	glTranslatef(0.0f, 138.0f, 0.0f);
+	glTranslatef(0.0f, 166.7, 0.0f);
 	//glColor3f(0.752941f, 0.752941f, 0.752941f);
 
 	glBindTexture(GL_TEXTURE_2D, texture[3]);
-	glBegin(GL_QUADS);
+	drawBox(0,0,0, 20, 280, 750, 3);
+	/*glBegin(GL_QUADS);
 	glVertex3f(x, y2, z);
 	glVertex3f(-x, y2, z);
 	glVertex3f(-x, y1, z);
@@ -552,10 +564,16 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	glVertex3f(x, y2, -z);
 	glVertex3f(-x, y2, -z);
 	glVertex3f(-x, y2, z);
-	glEnd();
+	glEnd();*/
 
 	glColor3f(0.6, 0.6, 0.6);
 	//glColor3f(0.0f, 1.0f, 1.0f);
+
+	x = 140;
+	z = 375;
+	y2 = 20;
+	y3 = 70;
+
 	glBegin(GL_TRIANGLES);  // Triangulo da frente do Telhado
 	glVertex3f(-x, y2, z);
 	glVertex3f(0, y3, z);
@@ -748,63 +766,104 @@ void renderScene(void) {
 
 	
 	int h = 150;
+	float boxh = 5;
 	//float coluna[3] = { 0.5, 0.5, 0.5 };
 
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
+		drawBox(i, 12+h, 367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, 367, 2);
 	}
 	for (int i = 127; i > 0; i -= 35) {
+		drawBox(i, 12 + h, 367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, 367, 2);
 	}
 	//COLUNAS FUNDOS
 	for (int i = -127; i < 0; i += 35) {
+		drawBox(i, 12 + h, -367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, -367, 2);
 	}
 	for (int i = 127; i > 0; i -= 35) {
+		drawBox(i, 12 + h, -367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, -367, 2);
 	}
 	//COLUNAS LATERIAS
 	for (int i = -367; i <= 367; i += 35) {
+		drawBox(127, 12 + h, i, boxh, 18, 18, 2);
 		draw_cylinder(8, h, 127, 12, i, 2);
 	}
 	for (int i = -367; i <= 367; i += 35) {
+		drawBox(-127, 12 + h, i, boxh, 18, 18, 2);
 		draw_cylinder(8, h, -127, 12, i, 2);
 	}
 
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h - 8, i, 20, 290, 2);
+		drawBox(i, 20+h-8, 290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, 290, 2);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h - 8, i, 20, 290, 2);
+		drawBox(i, 20+h-8, 290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, 290, 2);
 	}
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h - 8, i, 20, -290, 2);
+		drawBox(i, 20+ h-8, -290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, -290, 2);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h - 8, i, 20, -290, 2);
+		drawBox(i, 20 + h-8, -290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, -290, 2);
 	}
 
 	//COLUNAS INTERNAS DAS VIRGENS
+	drawBox(40, 20+ h - 8, -150, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, 40, 20, -150, 2);
+
+	drawBox(40, 20+ h - 8, -209, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, 40, 20, -209, 2);
 
+	drawBox(-40, 20+ h - 8, -150, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, -40, 20, -150, 2);
+
+	drawBox(-40, 20+ h - 8, -209, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, -40, 20, -209, 2);
 
 	//COLUNA ESTATUA ATENA
+	float hlim = ((20 + h - 8)/2) - 11;
 	int last = 0;
 	for (int i = -58; i < 62; i += 22) {
 		last = i;
-		draw_cylinder(6, h, i, 20, -50, 2);
+		//baixo
+		drawBox(i, 20 + hlim, -50, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, i, 20, -50, 2);
+
+		//cima
+		drawBox(i, 20 + h - 8, -50, boxh, 18, 18, 2);
+		draw_cylinder(6, h-hlim-11, i, hlim+25, -50, 2);
 	}
+	drawBox(2, 20 + hlim + 5, -50, 6, 130, 20, 4);
+
 
 	for (int i = -25; i < 240; i += 25) {
-		draw_cylinder(6, h, -58, 20, i, 2);
-		draw_cylinder(6, h, last, 20, i, 2);
+		//em baixo
+		drawBox(-58, 20 + hlim, i, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, -58, 20, i, 2);
+
+		drawBox(last, 20 + hlim, i, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, last, 20, i, 2);
+
+
+		//em cima
+		drawBox(-58, 20 + h - 8, i, boxh, 18, 18, 2);
+		draw_cylinder(6, h - (hlim + 11), -58, hlim+25, i, 2);
+
+		drawBox(last, 20 + h- 8, i, boxh, 18, 18, 2);
+		draw_cylinder(6, h - (hlim + 11), last, hlim+25, i, 2);
 	}
+
+	drawBox(-58, 20 + hlim + 5, 90, 6, 20, 300, 4);
+	drawBox(last, 20 + hlim + 5, 90, 6, 20, 300, 4);
 
 	for (int i = 70; i < 200; i += 30) {
 		tocha(-38, 20, i);
