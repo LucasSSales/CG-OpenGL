@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <GL\glew.h>
+//#include <GL\glew.h>
 #include <GL\freeglut.h>
 #include <iostream>
 //#include <GL/glut.h>
@@ -187,8 +187,10 @@ void init(void) {
 	Image *image3 = loadTexture("wall2.bmp");
 	Image *image4 = loadTexture("wall.bmp");
 	Image *image5 = loadTexture("gold.bmp");
+	Image *image6 = loadTexture("grama.bmp");
+	Image *image7 = loadTexture("roof.bmp");
 
-	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL) {
+	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL || image6 == NULL || image7==NULL) {
 		printf("Image was not returned from loadTexture\n");
 		exit(0);
 	}
@@ -228,6 +230,19 @@ void init(void) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, image5->sizeX, image5->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image5->data);
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+	glBindTexture(GL_TEXTURE_2D, texture[5]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image6->sizeX, image6->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image6->data);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+	glBindTexture(GL_TEXTURE_2D, texture[6]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image7->sizeX, image7->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image7->data);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
 
 	glEnable(GL_TEXTURE_2D);
 
@@ -511,7 +526,7 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	glTranslatef(0.0f, 166.7, 0.0f);
 	//glColor3f(0.752941f, 0.752941f, 0.752941f);
 
-	glBindTexture(GL_TEXTURE_2D, texture[3]);
+	
 	drawBox(0,0,0, 20, 280, 750, 3);
 
 	glColor3f(0.6, 0.6, 0.6);
@@ -522,34 +537,67 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	y2 = 20;
 	y3 = 70;
 
+	glBindTexture(GL_TEXTURE_2D, texture[4]);
 	glBegin(GL_TRIANGLES);  // Triangulo da frente do Telhado
+	glTexCoord2f(0,0);
 	glVertex3f(-x, y2, z);
+	glTexCoord2f(1,0);
 	glVertex3f(0, y3, z);
+	glTexCoord2f(0,1);
 	glVertex3f(x, y2, z);
 	glEnd();
 
-	//glColor3f(0.5f, 1.0f, 1.0f);
-	glBegin(GL_POLYGON);  // Lateral esquerda do telhado
-	glVertex3f(-x, y2, z);
-	glVertex3f(0, y3, z);
-	glVertex3f(0, y3, -z);
-	glVertex3f(-x, y2, -z);
-	glEnd();
-
-	//glColor3f(1.0f, 1.0f, 1.0f);
-	glBegin(GL_POLYGON);  // Lateral direita do telhado
-	glVertex3f(x, y2, z);
-	glVertex3f(0, y3, z);
-	glVertex3f(0, y3, -z);
-	glVertex3f(x, y2, -z);
-	glEnd();
 
 	//glColor3f(1.0f, 0.5f, 1.0f);
 	glBegin(GL_TRIANGLES);  // Triangulo de tras do Telhado
+	glTexCoord2f(0,0);
 	glVertex3f(-x, y2, -z);
+	glTexCoord2f(1,0);
 	glVertex3f(0, y3, -z);
+	glTexCoord2f(0,1);
 	glVertex3f(x, y2, -z);
 	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, texture[6]);
+
+	
+	for(int tempz = z; tempz > -z; tempz -= 50){
+		glBegin(GL_POLYGON);  // Lateral esquerda do telhado
+		glTexCoord2f(0,0);
+		glVertex3f(-x, y2, tempz);
+		glTexCoord2f(1,0);
+		glVertex3f(0, y3, tempz);
+		glTexCoord2f(1,1);
+		glVertex3f(0, y3, tempz-50);
+		glTexCoord2f(0,1);
+		glVertex3f(-x, y2,tempz-50);
+		glEnd();
+	}
+	for(int tempz = z; tempz > -z; tempz -= 50){
+		glBegin(GL_POLYGON);  // Lateral esquerda do telhado
+		glTexCoord2f(0,0);
+		glVertex3f(x, y2, tempz);
+		glTexCoord2f(1,0);
+		glVertex3f(0, y3, tempz);
+		glTexCoord2f(1,1);
+		glVertex3f(0, y3, tempz-50);
+		glTexCoord2f(0,1);
+		glVertex3f(x, y2,tempz-50);
+		glEnd();
+	}
+
+	//glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_POLYGON);  // Lateral direita do telhado
+	glTexCoord2f(0,0);
+	glVertex3f(x, y2, z);
+	glTexCoord2f(1,0);
+	glVertex3f(0, y3, z);
+	glTexCoord2f(1,1);
+	glVertex3f(0, y3, -z);
+	glTexCoord2f(0,1);
+	glVertex3f(x, y2, -z);
+	glEnd();
+
 
 	glPopMatrix();
 
@@ -672,13 +720,35 @@ void renderScene(void) {
 
 
 	// Draw ground
-	glColor3f(0.0, 0.65, 0.0);
-	glBegin(GL_QUADS);
-	glVertex3f(-1000.0f, 0.0f, -1000.0f);
-	glVertex3f(-1000.0f, 0.0f, 1000.0f);
-	glVertex3f(1000.0f, 0.0f, 1000.0f);
-	glVertex3f(1000.0f, 0.0f, -1000.0f);
-	glEnd();
+	//glColor3f(0.0, 0.65, 0.0);
+	for(int tempx = -1000; tempx <=1000; tempx += 100){
+		for(int tempz = -1000; tempz <= 1000; tempz +=100){
+			glBindTexture(GL_TEXTURE_2D, texture[5]);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 0.0);
+			glVertex3f(tempx, 0.0f, tempz);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3f(tempx, 0.0f, tempz+100);
+			glTexCoord2f(1.0, 1.0);
+			glVertex3f(tempx+100, 0.0f, tempz+100);
+			glTexCoord2f(0.0, 1.0);
+			glVertex3f(tempx+100, 0.0f, tempz);
+			glEnd();
+
+			/*glBindTexture(GL_TEXTURE_2D, texture[4]);
+			glBegin(GL_QUADS);
+			glTexCoord2f(0.0, 0.0);
+			glVertex3f(-1000.0f, 0.0f, -1000.0f);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3f(-1000.0f, 0.0f, 1000.0f);
+			glTexCoord2f(1.0, 1.0);
+			glVertex3f(1000.0f, 0.0f, 1000.0f);
+			glTexCoord2f(0.0, 1.0);
+			glVertex3f(1000.0f, 0.0f, -1000.0f);
+			glEnd();*/
+		}
+	}
+	
 
 	drawFloor();
 	drawDoor(20, 20, 240, door_angle);
