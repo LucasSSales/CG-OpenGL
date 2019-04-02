@@ -36,6 +36,13 @@ float gold[3] = { 1, 1, 0 };
 void init(void) {
 	// sky color
 	glClearColor(0.0, 0.7, 1.0, 1.0);
+
+	glEnable(GL_DEPTH_TEST);
+  	glEnable(GL_COLOR_MATERIAL);
+  	glEnable(GL_LIGHTING);
+  	glEnable(GL_LIGHT0);
+  	glEnable(GL_LIGHT1);
+  	glEnable(GL_NORMALIZE);
 }
 
 void drawDegrau(float x, float y1, float y2, float z) {
@@ -403,6 +410,23 @@ void renderScene(void) {
 
 	// Reset transformations
 	glLoadIdentity();
+
+	// //Ambient Light
+	// GLfloat amb[] = {1.0f, 1.0f, 1.0f, 1.0f}; //intensidade/cor
+	// glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+
+	// //positioned light
+	// GLfloat col0[] = {1.0f, 1.0f, 1.0f, 1.0f}; //cor
+	// GLfloat pos0[] = {100.0f, 300.0f, 0.0f, 1.0f}; //coordenadas
+	// glLightfv(GL_LIGHT0, GL_DIFFUSE, col0);
+	// glLightfv(GL_LIGHT0, GL_POSITION, pos0);
+
+	//directed light
+	GLfloat col1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //cor
+	GLfloat pos1[] = {-1.0f, 300.0f, 0.5f, 0.0f}; //coordenadas, directed
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
+	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
+
 
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
