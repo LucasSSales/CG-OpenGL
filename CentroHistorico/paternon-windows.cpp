@@ -627,7 +627,8 @@ void table(float x, float y, float z) {
 
 void tocha(float x, float y, float z) {
 	glPushMatrix();
-	glColor3f(1.0f, 1.0f, 0.0f);//Brown
+	glBindTexture(GL_TEXTURE_2D, texture[4]);
+	//glColor3f(1.0f, 1.0f, 0.0f);//Brown
 								//draw_cylinder(2, 0.5, x, y, z, gold);
 								//draw_cylinder(1, 12, x, y + 0.5, z, gold);
 	glTranslatef(x, y, z);
@@ -642,6 +643,26 @@ void tocha(float x, float y, float z) {
 	glRotatef(90, 1, 0, 0);
 	glutSolidCone(3.5, 4, 10, 10);
 	glPopMatrix();
+}
+
+void drawbed(float position_x, float position_y, float position_z, float size) {
+	float c[3] = { 0.7,0,0 };
+
+	glPushMatrix();
+	glTranslatef(position_x, position_y, position_z);
+
+	drawBox(0, size / 20, 0, size / 10, size / 5, size / 3, 0);
+	c[2] = 0.7;
+	draw_cylinder((GLfloat) size / 80, (GLfloat)(size / 20) + 1, size / 10 - size / 80, 0, size / 6 - size / 80, 0);
+	draw_cylinder((GLfloat)size / 80, (GLfloat)(size / 20) + 1, -size / 10 + size / 80, 0, size / 6 - size / 80, 0);
+	draw_cylinder((GLfloat)size / 80, (GLfloat)(size / 20) + 1, -size / 10 + size / 80, 0, -size / 6 + size / 80, 0);
+	draw_cylinder((GLfloat)size / 80, (GLfloat)(size / 20) + 1, size / 10 - size / 80, 0, -size / 6 + size / 80, 0);
+	c[2] = 0.7;
+	c[0] = 0.7;
+	drawBox(0, size / 10, (size / 9) - 1, size / 10, size / 7, size / 9, 0);
+
+	glPopMatrix();
+
 }
 
 void renderScene(void) {
@@ -666,7 +687,7 @@ void renderScene(void) {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
 	//spot light
-	GLfloat pos0[] = { 400.0f, 300.0f, 400.0f, 1.0f }; //coordenadas
+	GLfloat pos0[] = { 100.0f, 300.0f, 600.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT0, GL_POSITION, pos0);
 	GLfloat direction[] = { -400.0f, 0.0f, 0.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction);
@@ -675,10 +696,11 @@ void renderScene(void) {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, dif0);
 	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 100);//concentração
 
-											   //positioned light
-	GLfloat col1[] = { 1.0f, 1.0f, 0.0f, 1.0f }; //cor
-	GLfloat pos1[] = { 0.0f, 30.0f, -60.0f, 1.0f }; //coordenadas
+	//positioned light
+	GLfloat col1[] = { 0.6f, 0.6f, 0.5f, 1.0f }; //cor
+	GLfloat pos1[] = { 150.0f, 90.0f, 80.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
+	//glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
 	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
 	//glLightf(GL_LIGHT1, GL_EXPONENT, 5);//concentração
 
@@ -696,6 +718,9 @@ void renderScene(void) {
 	//glLightfv(GL_LIGHT1, GL_POSITION, pos1);
 
 
+
+	drawbed(15, 20, -120, 70);
+	drawbed(-15, 20, -120, 70);
 
 
 	// Draw ground
