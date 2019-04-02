@@ -54,25 +54,15 @@ typedef struct Image Image;
 GLubyte checkImage[checkImageWidth][checkImageHeight][3];
 
 void makeCheckImage(void) {
-
 	int i, j, c;
-
 	for (i = 0; i < checkImageWidth; i++) {
-
 		for (j = 0; j < checkImageHeight; j++) {
-
 			c = ((((i & 0x8) == 0) ^ ((j & 0x8) == 0))) * 255;
-
 			checkImage[i][j][0] = (GLubyte)c;
-
 			checkImage[i][j][1] = (GLubyte)c;
-
 			checkImage[i][j][2] = (GLubyte)c;
-
 		}
-
 	}
-
 }
 
 int ImageLoad(char *filename, Image *image) {
@@ -103,13 +93,9 @@ int ImageLoad(char *filename, Image *image) {
 	//printf("Width of %s: %lu\n", filename, image->sizeX);
 
 	// read the height
-
 	if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
-
 		printf("Error reading height from %s.\n", filename);
-
 		return 0;
-
 	}
 
 	//printf("Height of %s: %lu\n", filename, image->sizeY);
@@ -158,11 +144,9 @@ int ImageLoad(char *filename, Image *image) {
 		temp = image->data[i];
 		image->data[i] = image->data[i + 2];
 		image->data[i + 2] = temp;
-
 	}
 	// we're done.
 	return 1;
-
 }
 
 Image * loadTexture(char *filename) {
@@ -344,7 +328,6 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 	glEnd();
 	/** Draw the circle on top of cylinder */
 
-
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * PI) {
@@ -461,7 +444,6 @@ void drawDoor(float x, float y, float z, char angle) {
 	//glutSolidCube(100.0);
 
 	glPopMatrix();
-
 }
 
 void drawFloor() {
@@ -486,7 +468,7 @@ void drawFloor() {
 	//DIVISORIA
 	drawBox(0, 20, -95, h, 180, 10, 1); //H, W, L
 
-										   //BORDAS
+	//BORDAS
 	drawBox(50, 20, 245, h, 60, 10, 1);
 	drawBox(50, 20, -245, h, 60, 10, 1);
 	drawBox(-50, 20, 245, h, 60, 10, 1);
@@ -531,40 +513,6 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 	glBindTexture(GL_TEXTURE_2D, texture[3]);
 	drawBox(0,0,0, 20, 280, 750, 3);
-	/*glBegin(GL_QUADS);
-	glVertex3f(x, y2, z);
-	glVertex3f(-x, y2, z);
-	glVertex3f(-x, y1, z);
-	glVertex3f(x, y1, z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y2, -z);
-	glVertex3f(x, y1, -z);
-	glVertex3f(x, y1, z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, -z);
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y1, -z);
-	glVertex3f(x, y1, -z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y2, z);
-	glVertex3f(-x, y1, z);
-	glVertex3f(-x, y1, -z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y2, -z);
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y2, z);
-	glEnd();*/
 
 	glColor3f(0.6, 0.6, 0.6);
 	//glColor3f(0.0f, 1.0f, 1.0f);
@@ -694,10 +642,8 @@ void renderScene(void) {
 	// Reset transformations
 	glLoadIdentity();
 
-
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
-
 
 	//Ambient Light
 	GLfloat amb[] = { 0.3, 0.3, 0.3, 1.0f }; //intensidade/cor
@@ -718,23 +664,7 @@ void renderScene(void) {
 	GLfloat col1[] = { 0.6f, 0.6f, 0.5f, 1.0f }; //cor
 	GLfloat pos1[] = { 150.0f, 90.0f, 80.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
-	//glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
 	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
-	//glLightf(GL_LIGHT1, GL_EXPONENT, 5);//concentração
-
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, objeto_ambiente);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, objeto_difusa);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, objeto_especular);
-	//glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, n);
-
-	//glShadeModel(GL_SMOOTH);
-
-	//directed light
-	//GLfloat col1[] = { 0.5f, 0.2f, 0.2f, 1.0f }; //cor
-	//GLfloat pos1[] = { -1.0f, 300.0f, 0.5f, 0.0f }; //coordenadas, directed
-	//glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
-	//glLightfv(GL_LIGHT1, GL_POSITION, pos1);
-
 
 
 	drawbed(15, 20, -120, 70);
@@ -750,10 +680,6 @@ void renderScene(void) {
 	glVertex3f(1000.0f, 0.0f, -1000.0f);
 	glEnd();
 
-	//draw_cylinder(5, 25, 0, 200, 500, gold);
-
-	//drawHouse();
-	//drawDoor();
 	drawFloor();
 	drawDoor(20, 20, 240, door_angle);
 	drawDoor(-20, 20, 240, -door_angle);
@@ -764,10 +690,9 @@ void renderScene(void) {
 
 	table(0, 20, -176);
 
-	
+	//COLUNAS
 	int h = 150;
 	float boxh = 5;
-	//float coluna[3] = { 0.5, 0.5, 0.5 };
 
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
