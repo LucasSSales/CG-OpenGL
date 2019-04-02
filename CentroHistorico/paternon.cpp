@@ -1,15 +1,18 @@
 /*#include <Windows.h>
-#include <GL\glew.h>
-#include <GL\freeglut.h>
+
 #include <iostream>*/
 
 //#include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glut.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <string.h>
+#include <errno.h>
+//#include "texture.h"
 #define PI 3.141592
+
 
 /*
 * Adaptado de:
@@ -203,6 +206,7 @@ void init(void) {
 	Image *image3 = loadTexture("wall2.bmp");
 	Image *image4 = loadTexture("wall.bmp");
 	Image *image5 = loadTexture("gold.bmp");
+
 
 	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL) {
 		printf("Image was not returned from loadTexture\n");
@@ -526,6 +530,7 @@ void changeSize(int w, int h) {
 void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 	glPushMatrix();
+
 	glTranslatef(0.0f, 166.7, 0.0f);
 	//glColor3f(0.752941f, 0.752941f, 0.752941f);
 
@@ -651,8 +656,8 @@ void tocha(float x, float y, float z) {
 								//draw_cylinder(1, 12, x, y + 0.5, z, gold);
 	glTranslatef(x, y, z);
 	glRotatef(-90, 1, 0, 0);
-	glutSolidCylinder(2, 0.5, 10, 10);
-	glutSolidCylinder(1, 12, 10, 10);
+	//glutSolidCylinder(2, 0.5, 10, 10);
+	//glutSolidCylinder(1, 12, 10, 10);
 	//glTranslatef(-x, -y, -z);
 	glPopMatrix();
 
@@ -662,6 +667,7 @@ void tocha(float x, float y, float z) {
 	glutSolidCone(3.5, 4, 10, 10);
 	glPopMatrix();
 }
+
 
 void drawbed(float position_x, float position_y, float position_z, float size) {
 	float c[3] = { 0.7,0,0 };
@@ -705,6 +711,7 @@ void renderScene(void) {
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb);
 
 	//spot light
+	GLfloat pos0[] = { 400.0f, 300.0f, 400.0f, 1.0f }; //coordenadas
 	GLfloat pos0[] = { 100.0f, 300.0f, 600.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT0, GL_POSITION, pos0);
 	GLfloat direction[] = { -400.0f, 0.0f, 0.0f, 1.0f }; //coordenadas
@@ -714,6 +721,7 @@ void renderScene(void) {
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, dif0);
 	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 100);//concentração
 
+											   //
 	//positioned light
 	GLfloat col1[] = { 0.6f, 0.6f, 0.5f, 1.0f }; //cor
 	GLfloat pos1[] = { 150.0f, 90.0f, 80.0f, 1.0f }; //coordenadas
@@ -721,6 +729,7 @@ void renderScene(void) {
 	//glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
 	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
 	//glLightf(GL_LIGHT1, GL_EXPONENT, 5);//concentração
+
 
 	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, objeto_ambiente);
 	//glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, objeto_difusa);
