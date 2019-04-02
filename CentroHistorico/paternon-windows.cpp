@@ -29,9 +29,9 @@ float angle = 0.0f;
 float yangle = 0.0f;
 
 //colors
-float brown[3] = { 0.4, 0, 0 };
-float brownLight[3] = { 0.6, 0, 0 };
-float gold[3] = { 1, 1, 0 };
+//float brown[3] = { 0.4, 0, 0 };
+
+bool light = true;
 
 GLfloat luz_especular[] = { 0, 30, 0, 1 };
 GLfloat objeto_especular[] = { 0, 30, 0, 1 };
@@ -189,6 +189,8 @@ void init(void) {
 	Image *image5 = loadTexture("gold.bmp");
 	Image *image6 = loadTexture("grama.bmp");
 	Image *image7 = loadTexture("roof.bmp");
+	Image *image8 = loadTexture("pillow.bmp");
+	//Image *image9 = loadTexture("lencol.bmp");
 
 	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL || image6 == NULL || image7==NULL) {
 		printf("Image was not returned from loadTexture\n");
@@ -241,6 +243,18 @@ void init(void) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, image7->sizeX, image7->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image7->data);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+	glBindTexture(GL_TEXTURE_2D, texture[7]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image8->sizeX, image8->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image8->data);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+
+	//glBindTexture(GL_TEXTURE_2D, texture[8]);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
+	//glTexImage2D(GL_TEXTURE_2D, 0, 3, image9->sizeX, image9->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image9->data);
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
 
@@ -629,11 +643,15 @@ void table(float x, float y, float z) {
 	draw_cylinder(1.5, 8.9, x, y, z, 0);
 
 	glTranslatef(x, y, z);
+	
 	glRotatef(55, 0, 1, 0);
 	drawChair(-3, 0, -12);
 
 	glRotatef(-160, 0, 1, 0);
 	drawChair(-3, 0, -12);
+
+	glTranslatef(0,9.7,0);
+	glutSolidTeapot(1);
 
 	glPopMatrix();
 
@@ -664,8 +682,8 @@ void drawbed(float position_x, float position_y, float position_z, float size) {
 
 	glPushMatrix();
 	glTranslatef(position_x, position_y, position_z);
-
-	drawBox(0, size / 20, 0, size / 10, size / 5, size / 3, 0);
+	//glBindTexture(GL_TEXTURE_2D, texture[4]);
+	drawBox(0, size / 20, 0, size / 10, size / 5, size / 3, 7);
 	c[2] = 0.7;
 	draw_cylinder((GLfloat) size / 80, (GLfloat)(size / 20) + 1, size / 10 - size / 80, 0, size / 6 - size / 80, 0);
 	draw_cylinder((GLfloat)size / 80, (GLfloat)(size / 20) + 1, -size / 10 + size / 80, 0, size / 6 - size / 80, 0);
@@ -673,7 +691,8 @@ void drawbed(float position_x, float position_y, float position_z, float size) {
 	draw_cylinder((GLfloat)size / 80, (GLfloat)(size / 20) + 1, size / 10 - size / 80, 0, -size / 6 + size / 80, 0);
 	c[2] = 0.7;
 	c[0] = 0.7;
-	drawBox(0, size / 10, (size / 9) - 1, size / 10, size / 7, size / 9, 0);
+	//glBindTexture(GL_TEXTURE_2D, texture[8]);
+	drawBox(0, size / 10, (size / 9) - 1, size / 10, size / 7, size / 9, 7);
 
 	glPopMatrix();
 
@@ -875,6 +894,13 @@ void renderScene(void) {
 void processNormalKeys(unsigned char key, int x, int y) {
 	float fraction = 0.5f;
 	switch (key) {
+	case 'l':
+		light = !light;
+		if(light){
+			glEnable(GL_LIGHT0);
+		}else{
+			glDisable(GL_LIGHT0);
+		}
 	case 'o':
 		printf("%.2f %.2f %.2f ", x, z, y);
 		if (door_angle <= 118.0f) door_angle += 2.0f;
