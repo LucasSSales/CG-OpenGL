@@ -54,25 +54,15 @@ typedef struct Image Image;
 GLubyte checkImage[checkImageWidth][checkImageHeight][3];
 
 void makeCheckImage(void) {
-
 	int i, j, c;
-
 	for (i = 0; i < checkImageWidth; i++) {
-
 		for (j = 0; j < checkImageHeight; j++) {
-
 			c = ((((i & 0x8) == 0) ^ ((j & 0x8) == 0))) * 255;
-
 			checkImage[i][j][0] = (GLubyte)c;
-
 			checkImage[i][j][1] = (GLubyte)c;
-
 			checkImage[i][j][2] = (GLubyte)c;
-
 		}
-
 	}
-
 }
 
 int ImageLoad(char *filename, Image *image) {
@@ -103,13 +93,9 @@ int ImageLoad(char *filename, Image *image) {
 	//printf("Width of %s: %lu\n", filename, image->sizeX);
 
 	// read the height
-
 	if ((i = fread(&image->sizeY, 4, 1, file)) != 1) {
-
 		printf("Error reading height from %s.\n", filename);
-
 		return 0;
-
 	}
 
 	//printf("Height of %s: %lu\n", filename, image->sizeY);
@@ -158,11 +144,9 @@ int ImageLoad(char *filename, Image *image) {
 		temp = image->data[i];
 		image->data[i] = image->data[i + 2];
 		image->data[i + 2] = temp;
-
 	}
 	// we're done.
 	return 1;
-
 }
 
 Image * loadTexture(char *filename) {
@@ -344,7 +328,6 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 	glEnd();
 	/** Draw the circle on top of cylinder */
 
-
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * PI) {
@@ -428,6 +411,17 @@ void drawBox(float x, float y, float z, float height, float width, float length,
 	glVertex3f((x + width / 2), y + height, z - length / 2);
 	glEnd();
 
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f((x + width / 2), y, (z + length / 2));
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(x - width / 2, y, z + length / 2);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(x - width / 2, y, z - length / 2);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f((x + width / 2), y, z - length / 2);
+	glEnd();
+
 	glPopMatrix();
 }
 
@@ -450,7 +444,6 @@ void drawDoor(float x, float y, float z, char angle) {
 	//glutSolidCube(100.0);
 
 	glPopMatrix();
-
 }
 
 void drawFloor() {
@@ -475,7 +468,7 @@ void drawFloor() {
 	//DIVISORIA
 	drawBox(0, 20, -95, h, 180, 10, 1); //H, W, L
 
-										   //BORDAS
+	//BORDAS
 	drawBox(50, 20, 245, h, 60, 10, 1);
 	drawBox(50, 20, -245, h, 60, 10, 1);
 	drawBox(-50, 20, 245, h, 60, 10, 1);
@@ -515,47 +508,20 @@ void changeSize(int w, int h) {
 void drawRoof(float x, float y1, float y2, float y3, float z) {
 
 	glPushMatrix();
-	glTranslatef(0.0f, 138.0f, 0.0f);
+	glTranslatef(0.0f, 166.7, 0.0f);
 	//glColor3f(0.752941f, 0.752941f, 0.752941f);
 
 	glBindTexture(GL_TEXTURE_2D, texture[3]);
-	glBegin(GL_QUADS);
-	glVertex3f(x, y2, z);
-	glVertex3f(-x, y2, z);
-	glVertex3f(-x, y1, z);
-	glVertex3f(x, y1, z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y2, -z);
-	glVertex3f(x, y1, -z);
-	glVertex3f(x, y1, z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, -z);
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y1, -z);
-	glVertex3f(x, y1, -z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y2, z);
-	glVertex3f(-x, y1, z);
-	glVertex3f(-x, y1, -z);
-	glEnd();
-
-	glBegin(GL_QUADS);  // Wall
-	glVertex3f(x, y2, z);
-	glVertex3f(x, y2, -z);
-	glVertex3f(-x, y2, -z);
-	glVertex3f(-x, y2, z);
-	glEnd();
+	drawBox(0,0,0, 20, 280, 750, 3);
 
 	glColor3f(0.6, 0.6, 0.6);
 	//glColor3f(0.0f, 1.0f, 1.0f);
+
+	x = 140;
+	z = 375;
+	y2 = 20;
+	y3 = 70;
+
 	glBegin(GL_TRIANGLES);  // Triangulo da frente do Telhado
 	glVertex3f(-x, y2, z);
 	glVertex3f(0, y3, z);
@@ -676,10 +642,8 @@ void renderScene(void) {
 	// Reset transformations
 	glLoadIdentity();
 
-
 	// Set the camera    
 	gluLookAt(x, thy, z, x + lx, thy + ly, z + lz, 0.0f, 1.0f, 0.0f);
-
 
 	//Ambient Light
 	GLfloat amb[] = { 0.3, 0.3, 0.3, 1.0f }; //intensidade/cor
@@ -700,23 +664,7 @@ void renderScene(void) {
 	GLfloat col1[] = { 0.6f, 0.6f, 0.5f, 1.0f }; //cor
 	GLfloat pos1[] = { 150.0f, 90.0f, 80.0f, 1.0f }; //coordenadas
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
-	//glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
 	glLightfv(GL_LIGHT1, GL_POSITION, pos1);
-	//glLightf(GL_LIGHT1, GL_EXPONENT, 5);//concentração
-
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, objeto_ambiente);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, objeto_difusa);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, objeto_especular);
-	//glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, n);
-
-	//glShadeModel(GL_SMOOTH);
-
-	//directed light
-	//GLfloat col1[] = { 0.5f, 0.2f, 0.2f, 1.0f }; //cor
-	//GLfloat pos1[] = { -1.0f, 300.0f, 0.5f, 0.0f }; //coordenadas, directed
-	//glLightfv(GL_LIGHT1, GL_DIFFUSE, col1);
-	//glLightfv(GL_LIGHT1, GL_POSITION, pos1);
-
 
 
 	drawbed(15, 20, -120, 70);
@@ -732,10 +680,6 @@ void renderScene(void) {
 	glVertex3f(1000.0f, 0.0f, -1000.0f);
 	glEnd();
 
-	//draw_cylinder(5, 25, 0, 200, 500, gold);
-
-	//drawHouse();
-	//drawDoor();
 	drawFloor();
 	drawDoor(20, 20, 240, door_angle);
 	drawDoor(-20, 20, 240, -door_angle);
@@ -746,65 +690,105 @@ void renderScene(void) {
 
 	table(0, 20, -176);
 
-	
+	//COLUNAS
 	int h = 150;
-	//float coluna[3] = { 0.5, 0.5, 0.5 };
+	float boxh = 5;
 
 	//COLUNAS FACHADA
 	for (int i = -127; i < 0; i += 35) {
+		drawBox(i, 12+h, 367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, 367, 2);
 	}
 	for (int i = 127; i > 0; i -= 35) {
+		drawBox(i, 12 + h, 367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, 367, 2);
 	}
 	//COLUNAS FUNDOS
 	for (int i = -127; i < 0; i += 35) {
+		drawBox(i, 12 + h, -367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, -367, 2);
 	}
 	for (int i = 127; i > 0; i -= 35) {
+		drawBox(i, 12 + h, -367, boxh, 18, 18, 2);
 		draw_cylinder(8, h, i, 12, -367, 2);
 	}
 	//COLUNAS LATERIAS
 	for (int i = -367; i <= 367; i += 35) {
+		drawBox(127, 12 + h, i, boxh, 18, 18, 2);
 		draw_cylinder(8, h, 127, 12, i, 2);
 	}
 	for (int i = -367; i <= 367; i += 35) {
+		drawBox(-127, 12 + h, i, boxh, 18, 18, 2);
 		draw_cylinder(8, h, -127, 12, i, 2);
 	}
 
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h - 8, i, 20, 290, 2);
+		drawBox(i, 20+h-8, 290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, 290, 2);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h - 8, i, 20, 290, 2);
+		drawBox(i, 20+h-8, 290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, 290, 2);
 	}
 	//COLUNAS INTERNAS ENTRADA
 	for (int i = -75; i < 0; i += 30) {
-		draw_cylinder(7, h - 8, i, 20, -290, 2);
+		drawBox(i, 20+ h-8, -290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, -290, 2);
 	}
 	for (int i = 75; i > 0; i -= 30) {
-		draw_cylinder(7, h - 8, i, 20, -290, 2);
+		drawBox(i, 20 + h-8, -290, boxh, 18, 18, 2);
+		draw_cylinder(7, h-8, i, 20, -290, 2);
 	}
 
 	//COLUNAS INTERNAS DAS VIRGENS
+	drawBox(40, 20+ h - 8, -150, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, 40, 20, -150, 2);
+
+	drawBox(40, 20+ h - 8, -209, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, 40, 20, -209, 2);
 
+	drawBox(-40, 20+ h - 8, -150, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, -40, 20, -150, 2);
+
+	drawBox(-40, 20+ h - 8, -209, boxh, 18, 18, 2);
 	draw_cylinder(8, h - 8, -40, 20, -209, 2);
 
 	//COLUNA ESTATUA ATENA
+	float hlim = ((20 + h - 8)/2) - 11;
 	int last = 0;
 	for (int i = -58; i < 62; i += 22) {
 		last = i;
-		draw_cylinder(6, h, i, 20, -50, 2);
+		//baixo
+		drawBox(i, 20 + hlim, -50, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, i, 20, -50, 2);
+
+		//cima
+		drawBox(i, 20 + h - 8, -50, boxh, 18, 18, 2);
+		draw_cylinder(6, h-hlim-11, i, hlim+25, -50, 2);
 	}
+	drawBox(2, 20 + hlim + 5, -50, 6, 130, 20, 4);
+
 
 	for (int i = -25; i < 240; i += 25) {
-		draw_cylinder(6, h, -58, 20, i, 2);
-		draw_cylinder(6, h, last, 20, i, 2);
+		//em baixo
+		drawBox(-58, 20 + hlim, i, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, -58, 20, i, 2);
+
+		drawBox(last, 20 + hlim, i, boxh, 18, 18, 2);
+		draw_cylinder(6, hlim, last, 20, i, 2);
+
+
+		//em cima
+		drawBox(-58, 20 + h - 8, i, boxh, 18, 18, 2);
+		draw_cylinder(6, h - (hlim + 11), -58, hlim+25, i, 2);
+
+		drawBox(last, 20 + h- 8, i, boxh, 18, 18, 2);
+		draw_cylinder(6, h - (hlim + 11), last, hlim+25, i, 2);
 	}
+
+	drawBox(-58, 20 + hlim + 5, 90, 6, 20, 300, 4);
+	drawBox(last, 20 + hlim + 5, 90, 6, 20, 300, 4);
 
 	for (int i = 70; i < 200; i += 30) {
 		tocha(-38, 20, i);
