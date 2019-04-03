@@ -14,6 +14,10 @@
 /*
 * Adaptado de:
 *   https://github.com/mdrkb/3D-House-using-OpenGL-and-C-/blob/master/main.cpp
+* Codigos de textura:
+*	https://stackoverflow.com/questions/41858408/how-to-load-texture-opengl
+*	https://stackoverflow.com/questions/24127117/using-fopen-s-in-c
+*	https://www.gamedev.net/forums/topic/629276-cylindrical-texture-mapping/
 */
 
 // actual vector representing the camera's direction
