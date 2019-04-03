@@ -986,8 +986,17 @@ void divineLight(float zz) {
 
 
 void processNormalKeys(unsigned char key, int x, int y) {
-	float fraction = 0.5f;
+	float fraction = 3.0f;
 	switch (key) {
+	case 'e':
+		yangle += 0.05f;
+		ly = sin(yangle);
+		break;
+	case 'q':
+		yangle -= 0.05f;
+		ly = sin(yangle);
+		break;
+
 	case 'l':
 		light = !light;
 		if (light) {
