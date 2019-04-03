@@ -192,9 +192,9 @@ void init(void) {
 	Image *image6 = loadTexture("grama.bmp");
 	Image *image7 = loadTexture("roof.bmp");
 	Image *image8 = loadTexture("pillow.bmp");
-	//Image *image9 = loadTexture("lencol.bmp");
+	Image *image9 = loadTexture("athena.bmp");
 
-	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL || image6 == NULL || image7 == NULL || image8 == NULL) {
+	if (image1 == NULL || image3 == NULL || image4 == NULL || image5 == NULL || image6 == NULL || image7 == NULL || image8 == NULL || image9 == NULL) {
 		printf("Image was not returned from loadTexture\n");
 		exit(0);
 	}
@@ -253,10 +253,10 @@ void init(void) {
 	glTexImage2D(GL_TEXTURE_2D, 0, 3, image8->sizeX, image8->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image8->data);
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
-	//glBindTexture(GL_TEXTURE_2D, texture[8]);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
-	//glTexImage2D(GL_TEXTURE_2D, 0, 3, image9->sizeX, image9->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image9->data);
+	glBindTexture(GL_TEXTURE_2D, texture[8]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); //scale linearly when image bigger than texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); //scale linearly when image smalled than texture
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image9->sizeX, image9->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, image9->data);
 	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
 
 
@@ -698,6 +698,84 @@ void drawbed(float position_x, float position_y, float position_z, float size) {
 	glPopMatrix();
 
 }
+void drawAthena(float x, float y, float z, float height, float width, float length, int tex) {
+	glPushMatrix();
+	glTranslatef(0.0f, 0.0f, 0.0f);
+	//glRotatef(-90, 1, 0, 0);
+	glBindTexture(GL_TEXTURE_2D, texture[tex]);
+
+	//FRENTE
+	glBegin(GL_QUADS);
+	glNormal3f(-1, 0, 1);
+	glTexCoord2f(0.0, 0.0); glVertex3f(x + width / 2, y + height, z + length / 2);
+
+	glNormal3f(1, 0, 1);
+	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, z + length / 2);
+	
+	glNormal3f(1, 0, 1);
+	glTexCoord2f(1.0, 1.0); glVertex3f((x - width / 2), y, z + length / 2);
+	
+	glNormal3f(-1, 0, 1);
+	glTexCoord2f(0.0, 1.0); glVertex3f((x - width / 2), y + height, z + length / 2);
+	glEnd();
+	/*
+	//COSTAS
+	glBegin(GL_QUADS);
+	glNormal3f(-1, 0, -1); 
+	glTexCoord2f(0.0, 0.0); glVertex3f(x + width / 2, y + height, (z - length / 2));
+	glNormal3f(-1, 0, -1);
+	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, (z - length / 2));
+	glNormal3f(1, 0, -1);
+	glTexCoord2f(1.0, 1.0); glVertex3f((x - width / 2), y, (z - length / 2));
+	glNormal3f(1, 0, -1);
+	glTexCoord2f(0.0, 1.0); glVertex3f((x - width / 2), y + height, (z - length / 2));
+	glEnd();
+
+	//ESQUERDA
+	glBegin(GL_QUADS);
+	glNormal3f(-1, 0, -1);
+	glTexCoord2f(0.0, 0.0); glVertex3f((x - width / 2), y + height, (z + length / 2));
+	glNormal3f(-1, 0, 1);
+	glTexCoord2f(1.0, 0.0); glVertex3f((x - width / 2), y, (z + length / 2));
+	glNormal3f(-1, 0, 1);
+	glTexCoord2f(1.0, 1.0); glVertex3f((x - width / 2), y, (z - length / 2));
+	glNormal3f(-1, 0, -1);
+	glTexCoord2f(0.0, 1.0); glVertex3f((x - width / 2), y + height, (z - length / 2));
+	glEnd();
+
+	//DIREITA
+	glBegin(GL_QUADS);
+	glNormal3f(1, 0, -1);
+	glTexCoord2f(0.0, 0.0); glVertex3f(x + width / 2, y + height, (z + length / 2));
+	glNormal3f(1, 0, -1);
+	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, (z + length / 2));
+	glNormal3f(1, 0, 1);
+	glTexCoord2f(1.0, 1.0); glVertex3f(x + width / 2, y, (z - length / 2));
+	glNormal3f(1, 0, 1);
+	glTexCoord2f(0.0, 1.0); glVertex3f(x + width / 2, y + height, z - length / 2);
+	glEnd();
+
+	//TOPO
+	glBegin(GL_QUADS);
+	glNormal3f(0, 1, 0);
+	glTexCoord2f(0.0, 0.0); glVertex3f((x + width / 2), y + height, (z + length / 2));
+	glTexCoord2f(1.0, 0.0); glVertex3f(x - width / 2, y + height, z + length / 2);
+	glTexCoord2f(1.0, 1.0); glVertex3f(x - width / 2, y + height, z - length / 2);
+	glTexCoord2f(0.0, 1.0); glVertex3f((x + width / 2), y + height, z - length / 2);
+	glEnd();
+
+	//BAIXO
+	glBegin(GL_QUADS);
+	glNormal3f(0, -1, 0);
+	glTexCoord2f(0.0, 0.0); glVertex3f((x + width / 2), y, (z + length / 2));
+	glTexCoord2f(1.0, 0.0); glVertex3f(x - width / 2, y, z + length / 2);
+	glTexCoord2f(1.0, 1.0); glVertex3f(x - width / 2, y, z - length / 2);
+	glTexCoord2f(0.0, 1.0); glVertex3f((x + width / 2), y, z - length / 2);
+	glEnd();*/
+
+	glPopMatrix();
+}
+
 
 void renderScene(void) {
 
@@ -876,7 +954,7 @@ void renderScene(void) {
 		drawBox(last, 20 + h - 8, i, boxh, 18, 18, 2);
 		draw_cylinder(6, h - (hlim + 11), last, hlim + 25, i, 2);
 	}
-
+	drawAthena(0, 39, 0, 110, 70, 10, 8);
 	drawBox(-58, 20 + hlim + 5, 90, 6, 20, 300, 4);
 	drawBox(last, 20 + hlim + 5, 90, 6, 20, 300, 4);
 
@@ -909,8 +987,17 @@ void divineLight(float zz) {
 
 
 void processNormalKeys(unsigned char key, int x, int y) {
-	float fraction = 0.5f;
+	float fraction = 3.0f;
 	switch (key) {
+	case 'e':
+		yangle += 0.05f;
+		ly = sin(yangle);
+		break;
+	case 'q':
+		yangle -= 0.05f;
+		ly = sin(yangle);
+		break;
+
 	case 'l':
 		light = !light;
 		if (light) {
