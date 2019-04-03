@@ -360,6 +360,7 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 
 	glBegin(GL_POLYGON);
 	angle = 0.0;
+
 	while (angle < 2 * PI) {
 		x = radius * cos(angle);
 		y = radius * sin(angle);
@@ -367,9 +368,9 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 		float radian = angle * (PI / 180.0f);
 		float xcos = (float)cos(radian);
 		float ysin = (float)sin(radian);
-		float tx = xcos * 0.5 + 0.5;
-		float ty = ysin * 0.5 + 0.5;
-		glTexCoord2f(tx, ty);
+		//float tx = xcos * 0.5 + 0.5;
+		//float ty = ysin * 0.5 + 0.5;
+		glTexCoord2f(xcos, ysin);
 
 		glVertex3f(x, y, height);
 		angle = angle + angle_stepsize;
