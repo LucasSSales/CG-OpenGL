@@ -268,7 +268,7 @@ void drawDegrau(float x, float y1, float y2, float z) {
 	glPushMatrix();
 	glTranslatef(0.0f, 0.0f, 0.0f);
 	glColor3f(0.752941f, 0.752941f, 0.752941f);
-
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
 
 	glBegin(GL_QUADS);  // Wall
 	glTexCoord2f(0.0, 0.0);
@@ -399,7 +399,7 @@ void drawBox(float x, float y, float z, float height, float width, float length,
 
 	//COSTAS
 	glBegin(GL_QUADS);
-	glNormal3f(-1, 0, -1); 
+	glNormal3f(-1, 0, -1);
 	glTexCoord2f(0.0, 0.0); glVertex3f(x + width / 2, y + height, (z - length / 2));
 	glNormal3f(-1, 0, -1);
 	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, (z - length / 2));
@@ -541,7 +541,7 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	//glColor3f(0.752941f, 0.752941f, 0.752941f);
 
 
-	drawBox(0, 0, 0, 20, 280, 755, 3);
+	drawBox(0, 0, 0, 20, 280, 755, 1);
 
 	glColor3f(0.6, 0.6, 0.6);
 	//glColor3f(0.0f, 1.0f, 1.0f);
@@ -551,7 +551,7 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	y2 = 20;
 	y3 = 70;
 
-	glBindTexture(GL_TEXTURE_2D, texture[4]);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glBegin(GL_TRIANGLES);  // Triangulo da frente do Telhado
 	glTexCoord2f(0, 0);
 	glVertex3f(-x, y2, z);
@@ -573,7 +573,6 @@ void drawRoof(float x, float y1, float y2, float y3, float z) {
 	glEnd();
 
 	glBindTexture(GL_TEXTURE_2D, texture[6]);
-
 
 	for (int tempz = z; tempz > -z; tempz -= 50) {
 		glBegin(GL_POLYGON);  // Lateral esquerda do telhado
@@ -711,17 +710,17 @@ void drawAthena(float x, float y, float z, float height, float width, float leng
 
 	glNormal3f(1, 0, 1);
 	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, z + length / 2);
-	
+
 	glNormal3f(1, 0, 1);
 	glTexCoord2f(1.0, 1.0); glVertex3f((x - width / 2), y, z + length / 2);
-	
+
 	glNormal3f(-1, 0, 1);
 	glTexCoord2f(0.0, 1.0); glVertex3f((x - width / 2), y + height, z + length / 2);
 	glEnd();
 	/*
 	//COSTAS
 	glBegin(GL_QUADS);
-	glNormal3f(-1, 0, -1); 
+	glNormal3f(-1, 0, -1);
 	glTexCoord2f(0.0, 0.0); glVertex3f(x + width / 2, y + height, (z - length / 2));
 	glNormal3f(-1, 0, -1);
 	glTexCoord2f(1.0, 0.0); glVertex3f(x + width / 2, y, (z - length / 2));
@@ -977,7 +976,7 @@ void divineLight(float zz) {
 		}
 		else if (lastz > zz)
 			blue -= 0.02;
-		else if(lastz < zz)
+		else if (lastz < zz)
 			blue += 0.02;
 	}
 	else {
