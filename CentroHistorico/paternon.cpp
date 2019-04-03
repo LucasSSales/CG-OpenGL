@@ -1,13 +1,10 @@
 #include <Windows.h>
-//#include <GL\glew.h>
 #include <GL\freeglut.h>
 #include <iostream>
-//#include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
-//#include "texture.h"
 #define PI 3.141592
 
 
@@ -31,9 +28,6 @@ float door_angle = 0.0f;
 // angle for rotating
 float angle = 0.0f;
 float yangle = 0.0f;
-
-//colors
-//float brown[3] = { 0.4, 0, 0 };
 
 bool light = true;
 float blue = 0.7;
@@ -343,7 +337,6 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 	/** Draw the tube */
 	glPushMatrix();
 	glTranslatef(px, py, pz);
-	//glColor3f(color[0], color[1], color[2]);
 	glRotatef(-90, 1, 0, 0);
 	glBegin(GL_QUAD_STRIP);
 	angle = 0.0;
@@ -372,8 +365,6 @@ void draw_cylinder(GLfloat radius, GLfloat height, float px, float py, float pz,
 		float radian = angle * (PI / 180.0f);
 		float xcos = (float)cos(radian);
 		float ysin = (float)sin(radian);
-		//float tx = xcos * 0.5 + 0.5;
-		//float ty = ysin * 0.5 + 0.5;
 		glTexCoord2f(xcos, ysin);
 
 		glVertex3f(x, y, height);
